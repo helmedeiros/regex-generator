@@ -7,8 +7,8 @@
   "private": true,
   "scripts": {
     "lint": "tslint -p tsconfig.json",
-    "format:check": "prettier --list-different \"src/**/*.ts\"",
-    "format": "prettier --write \"src/**/*.ts\"",
+    "format:check": "prettier --list-different \"src/**/*.{ts,tsx}\"",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
     "typecheck": "tsc --noEmit",
     "test": "jest"
   },

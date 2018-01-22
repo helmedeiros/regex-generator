@@ -4,7 +4,11 @@ import { App } from "./App";
 
 describe("App", () => {
   it("renders the title", () => {
-    expect(shallow(<App />).find(".app-title").text()).toBe("Regex Generator");
+    expect(
+      shallow(<App />)
+        .find(".app-title")
+        .text()
+    ).toBe("Regex Generator");
   });
 
   it("renders a header", () => {
