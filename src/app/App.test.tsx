@@ -26,4 +26,8 @@ describe("App", () => {
     wrapper.find(SampleInput).simulate("change", "new text");
     expect(wrapper.find(SampleInput).prop("value")).toBe("new text");
   });
+
+  it("shows a hint for the sample step", () => {
+    expect(shallow(<App />).find(".sample-hint").length).toBe(1);
+  });
 });

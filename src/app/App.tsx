@@ -19,6 +19,9 @@ export class App extends React.Component<{}, AppState> {
         <main className="app-steps">
           <Step index={1} title="Paste a sample text.">
             <SampleInput value={this.state.sample} onChange={this.handleChange} />
+            <p className="sample-hint">
+              Give us an example of the text you want to match using your regex.
+            </p>
           </Step>
         </main>
       </div>
