@@ -16,3 +16,7 @@ export function sortMatches(matches: Match[]): Match[] {
 export function overlaps(a: Match, b: Match): boolean {
   return a.start < b.end && b.start < a.end;
 }
+
+export function matchKey(match: Match): string {
+  return `${match.start}:${match.end}:${match.name}`;
+}

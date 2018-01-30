@@ -1,4 +1,4 @@
-import { createMatch, overlaps, sortMatches } from "./match";
+import { createMatch, matchKey, overlaps, sortMatches } from "./match";
 
 describe("match", () => {
   it("creates a match", () => {
@@ -29,5 +29,9 @@ describe("match", () => {
 
   it("treats adjacent matches as non-overlapping", () => {
     expect(overlaps(createMatch(0, 3, "a", "a"), createMatch(3, 6, "b", "b"))).toBe(false);
+  });
+
+  it("builds a stable key from range and name", () => {
+    expect(matchKey(createMatch(2, 5, "Word", "\\w+"))).toBe("2:5:Word");
   });
 });
