@@ -15,23 +15,22 @@ const box: SuggestionBox = {
 describe("SuggestionBoxView", () => {
   it("names the recognizer through the title", () => {
     expect(
-      shallow(<SuggestionBoxView box={box} onSelect={jest.fn()} />)
+      shallow(<SuggestionBoxView box={box} selected={false} onSelect={jest.fn()} />)
         .find(".suggestion-box")
         .prop("title")
     ).toBe("Word");
   });
 
-  it("positions the box by column and row", () => {
-    const style = shallow(<SuggestionBoxView box={box} onSelect={jest.fn()} />)
-      .find(".suggestion-box")
-      .prop("style") as React.CSSProperties;
-    expect(style.left).toBe("2ch");
-    expect(style.width).toBe("3ch");
+  it("marks selected boxes with a class", () => {
+    const className = shallow(<SuggestionBoxView box={box} selected={true} onSelect={jest.fn()} />)
+      .find("div")
+      .prop("className");
+    expect(className).toContain("suggestion-box-selected");
   });
 
   it("reports selection on click", () => {
     const onSelect = jest.fn();
-    shallow(<SuggestionBoxView box={box} onSelect={onSelect} />)
+    shallow(<SuggestionBoxView box={box} selected={false} onSelect={onSelect} />)
       .find(".suggestion-box")
       .simulate("click");
     expect(onSelect).toBeCalledWith(box);

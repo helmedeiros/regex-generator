@@ -31,7 +31,12 @@ export class App extends React.Component<{}, AppState> {
             </p>
           </Step>
           <Step index={2} title="Which parts of the text are interesting for you?">
-            <Suggestions text={this.state.sample} boxes={boxes} onSelect={this.handleSelect} />
+            <Suggestions
+              text={this.state.sample}
+              boxes={boxes}
+              selected={this.state.selected}
+              onSelect={this.handleSelect}
+            />
           </Step>
         </main>
       </div>

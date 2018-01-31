@@ -10,7 +10,7 @@ describe("Suggestions", () => {
 
   it("shows the sample text", () => {
     expect(
-      shallow(<Suggestions text="hello" boxes={boxes} onSelect={jest.fn()} />)
+      shallow(<Suggestions text="hello" boxes={boxes} selected={[]} onSelect={jest.fn()} />)
         .find(".suggestions-text")
         .text()
     ).toBe("hello");
@@ -18,9 +18,17 @@ describe("Suggestions", () => {
 
   it("renders one box view per suggestion", () => {
     expect(
-      shallow(<Suggestions text="hello" boxes={boxes} onSelect={jest.fn()} />).find(
+      shallow(<Suggestions text="hello" boxes={boxes} selected={[]} onSelect={jest.fn()} />).find(
         SuggestionBoxView
       ).length
     ).toBe(2);
+  });
+
+  it("marks the selected box", () => {
+    const wrapper = shallow(
+      <Suggestions text="hello" boxes={boxes} selected={[boxes[0].match]} onSelect={jest.fn()} />
+    );
+    const selectedFlags = wrapper.find(SuggestionBoxView).map(node => node.prop("selected"));
+    expect(selectedFlags).toContain(true);
   });
 });
