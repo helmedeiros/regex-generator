@@ -6,6 +6,7 @@ import { recognize } from "../recognizers/recognize";
 import { Match } from "../regex/match";
 import { layoutSuggestions, SuggestionBox } from "../suggestions/layout";
 import { defaultSample } from "./defaultSample";
+import { toggleSelection } from "./selection";
 
 export interface AppState {
   sample: string;
@@ -42,13 +43,6 @@ export class App extends React.Component<{}, AppState> {
   };
 
   private handleSelect = (box: SuggestionBox) => {
-    const match = box.match;
-    const exists = this.state.selected.some(
-      picked =>
-        picked.start === match.start && picked.end === match.end && picked.name === match.name
-    );
-    if (!exists) {
-      this.setState({ selected: this.state.selected.concat(match) });
-    }
+    this.setState({ selected: toggleSelection(this.state.selected, box.match) });
   };
 }
