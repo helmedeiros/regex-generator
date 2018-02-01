@@ -1,9 +1,11 @@
 import * as React from "react";
+import { RegexOutput } from "../components/RegexOutput";
 import { SampleInput } from "../components/SampleInput";
 import { Step } from "../components/Step";
 import { Suggestions } from "../components/Suggestions";
 import { recognize } from "../recognizers/recognize";
 import { Match } from "../regex/match";
+import { buildRegexFromMatches } from "../regex/regexFromMatches";
 import { layoutSuggestions, SuggestionBox } from "../suggestions/layout";
 import { defaultSample } from "./defaultSample";
 import { toggleSelection } from "./selection";
@@ -18,6 +20,7 @@ export class App extends React.Component<{}, AppState> {
 
   public render() {
     const boxes = layoutSuggestions(recognize(this.state.sample));
+    const regex = buildRegexFromMatches(this.state.sample, this.state.selected);
     return (
       <div className="app">
         <header className="app-header">
@@ -37,6 +40,9 @@ export class App extends React.Component<{}, AppState> {
               selected={this.state.selected}
               onSelect={this.handleSelect}
             />
+          </Step>
+          <Step index={3} title="Regular Expression">
+            <RegexOutput regex={regex} />
           </Step>
         </main>
       </div>

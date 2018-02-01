@@ -1,7 +1,9 @@
 import { shallow } from "enzyme";
 import * as React from "react";
+import { RegexOutput } from "../components/RegexOutput";
 import { SampleInput } from "../components/SampleInput";
 import { Suggestions } from "../components/Suggestions";
+import { buildRegexFromMatches } from "../regex/regexFromMatches";
 import { SuggestionBox } from "../suggestions/layout";
 import { App } from "./App";
 import { defaultSample } from "./defaultSample";
@@ -38,5 +40,13 @@ describe("App", () => {
     expect(wrapper.find(Suggestions).length).toBe(1);
     const boxes = wrapper.find(Suggestions).prop("boxes") as SuggestionBox[];
     expect(boxes.length).toBeGreaterThan(0);
+  });
+
+  it("shows the escaped sample as the initial regex", () => {
+    expect(
+      shallow(<App />)
+        .find(RegexOutput)
+        .prop("regex")
+    ).toBe(buildRegexFromMatches(defaultSample, []));
   });
 });
