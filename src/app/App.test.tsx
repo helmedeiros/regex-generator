@@ -35,6 +35,10 @@ describe("App", () => {
     expect(shallow(<App />).find(".sample-hint").length).toBe(1);
   });
 
+  it("shows a hint for the suggestions step", () => {
+    expect(shallow(<App />).find(".suggestions-hint").length).toBe(1);
+  });
+
   it("shows suggestions for the sample", () => {
     const wrapper = shallow(<App />);
     expect(wrapper.find(Suggestions).length).toBe(1);

@@ -40,6 +40,9 @@ export class App extends React.Component<{}, AppState> {
               selected={this.state.selected}
               onSelect={this.handleSelect}
             />
+            <p className="suggestions-hint">
+              Click on the marked suggestions to select them for your regular expression.
+            </p>
           </Step>
           <Step index={3} title="Regular Expression">
             <RegexOutput regex={regex} />
