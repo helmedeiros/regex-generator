@@ -70,7 +70,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var match_1 = __webpack_require__(15);
+var match_1 = __webpack_require__(4);
 function regexRecognizer(name, source, pattern) {
     if (pattern === void 0) { pattern = source; }
     return {
@@ -97,6 +97,21 @@ exports.regexRecognizer = regexRecognizer;
 
 /***/ }),
 /* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+if (process.env.NODE_ENV === 'production') {
+  module.exports = __webpack_require__(17);
+} else {
+  module.exports = __webpack_require__(18);
+}
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+
+/***/ }),
+/* 2 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -286,21 +301,6 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-if (process.env.NODE_ENV === 'production') {
-  module.exports = __webpack_require__(17);
-} else {
-  module.exports = __webpack_require__(18);
-}
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
-
-/***/ }),
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -344,6 +344,31 @@ module.exports = emptyFunction;
 
 /***/ }),
 /* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+function createMatch(start, end, name, pattern) {
+    return { start: start, end: end, name: name, pattern: pattern };
+}
+exports.createMatch = createMatch;
+function sortMatches(matches) {
+    return matches.slice().sort(function (a, b) { return a.start - b.start || a.end - b.end; });
+}
+exports.sortMatches = sortMatches;
+function overlaps(a, b) {
+    return a.start < b.end && b.start < a.end;
+}
+exports.overlaps = overlaps;
+function matchKey(match) {
+    return match.start + ":" + match.end + ":" + match.name;
+}
+exports.matchKey = matchKey;
+
+
+/***/ }),
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -440,7 +465,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -461,10 +486,10 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 module.exports = emptyObject;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -521,10 +546,10 @@ function invariant(condition, format, a, b, c, d, e, f) {
 }
 
 module.exports = invariant;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -590,10 +615,10 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 module.exports = warning;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -701,10 +726,10 @@ checkPropTypes.resetWarningCache = function() {
 
 module.exports = checkPropTypes;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -743,7 +768,7 @@ var ExecutionEnvironment = {
 module.exports = ExecutionEnvironment;
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -821,10 +846,10 @@ var EventListener = {
 };
 
 module.exports = EventListener;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -866,7 +891,7 @@ function getActiveElement(doc) /*?DOMElement*/{
 module.exports = getActiveElement;
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -937,7 +962,7 @@ function shallowEqual(objA, objB) {
 module.exports = shallowEqual;
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -980,7 +1005,7 @@ function containsNode(outerNode, innerNode) {
 module.exports = containsNode;
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1010,27 +1035,6 @@ function focusNode(node) {
 module.exports = focusNode;
 
 /***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-function createMatch(start, end, name, pattern) {
-    return { start: start, end: end, name: name, pattern: pattern };
-}
-exports.createMatch = createMatch;
-function sortMatches(matches) {
-    return matches.slice().sort(function (a, b) { return a.start - b.start || a.end - b.end; });
-}
-exports.sortMatches = sortMatches;
-function overlaps(a, b) {
-    return a.start < b.end && b.start < a.end;
-}
-exports.overlaps = overlaps;
-
-
-/***/ }),
 /* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1044,10 +1048,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 }
 Object.defineProperty(exports, "__esModule", { value: true });
-var React = __importStar(__webpack_require__(2));
+var React = __importStar(__webpack_require__(1));
 var ReactDOM = __importStar(__webpack_require__(21));
 var App_1 = __webpack_require__(30);
-__webpack_require__(55);
+__webpack_require__(62);
 var root = document.getElementById("root");
 if (root) {
     ReactDOM.render(React.createElement(App_1.App, null), root);
@@ -1068,7 +1072,7 @@ if (root) {
  * LICENSE file in the root directory of this source tree.
  */
 
-var m=__webpack_require__(4),n=__webpack_require__(5),p=__webpack_require__(3),q="function"===typeof Symbol&&Symbol["for"],r=q?Symbol["for"]("react.element"):60103,t=q?Symbol["for"]("react.call"):60104,u=q?Symbol["for"]("react.return"):60105,v=q?Symbol["for"]("react.portal"):60106,w=q?Symbol["for"]("react.fragment"):60107,x="function"===typeof Symbol&&Symbol.iterator;
+var m=__webpack_require__(5),n=__webpack_require__(6),p=__webpack_require__(3),q="function"===typeof Symbol&&Symbol["for"],r=q?Symbol["for"]("react.element"):60103,t=q?Symbol["for"]("react.call"):60104,u=q?Symbol["for"]("react.return"):60105,v=q?Symbol["for"]("react.portal"):60106,w=q?Symbol["for"]("react.fragment"):60107,x="function"===typeof Symbol&&Symbol.iterator;
 function y(a){for(var b=arguments.length-1,e="Minified React error #"+a+"; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d"+a,c=0;c<b;c++)e+="\x26args[]\x3d"+encodeURIComponent(arguments[c+1]);b=Error(e+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings.");b.name="Invariant Violation";b.framesToPop=1;throw b;}
 var z={isMounted:function(){return!1},enqueueForceUpdate:function(){},enqueueReplaceState:function(){},enqueueSetState:function(){}};function A(a,b,e){this.props=a;this.context=b;this.refs=n;this.updater=e||z}A.prototype.isReactComponent={};A.prototype.setState=function(a,b){"object"!==typeof a&&"function"!==typeof a&&null!=a?y("85"):void 0;this.updater.enqueueSetState(this,a,b,"setState")};A.prototype.forceUpdate=function(a){this.updater.enqueueForceUpdate(this,a,"forceUpdate")};
 function B(a,b,e){this.props=a;this.context=b;this.refs=n;this.updater=e||z}function C(){}C.prototype=A.prototype;var D=B.prototype=new C;D.constructor=B;m(D,A.prototype);D.isPureReactComponent=!0;function E(a,b,e){this.props=a;this.context=b;this.refs=n;this.updater=e||z}var F=E.prototype=new C;F.constructor=E;m(F,A.prototype);F.unstable_isAsyncReactComponent=!0;F.render=function(){return this.props.children};var G={current:null},H=Object.prototype.hasOwnProperty,I={key:!0,ref:!0,__self:!0,__source:!0};
@@ -1104,12 +1108,12 @@ if (process.env.NODE_ENV !== "production") {
   (function() {
 'use strict';
 
-var _assign = __webpack_require__(4);
-var emptyObject = __webpack_require__(5);
-var invariant = __webpack_require__(6);
-var warning = __webpack_require__(7);
+var _assign = __webpack_require__(5);
+var emptyObject = __webpack_require__(6);
+var invariant = __webpack_require__(7);
+var warning = __webpack_require__(8);
 var emptyFunction = __webpack_require__(3);
-var checkPropTypes = __webpack_require__(8);
+var checkPropTypes = __webpack_require__(9);
 
 // TODO: this is special because it gets imported during build.
 
@@ -2445,7 +2449,7 @@ module.exports = react;
   })();
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
 /* 19 */
@@ -2517,7 +2521,7 @@ if (process.env.NODE_ENV === 'production') {
   module.exports = __webpack_require__(25);
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
 /* 22 */
@@ -2536,7 +2540,7 @@ if (process.env.NODE_ENV === 'production') {
 /*
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(2),l=__webpack_require__(9),B=__webpack_require__(4),C=__webpack_require__(3),ba=__webpack_require__(10),da=__webpack_require__(11),ea=__webpack_require__(12),fa=__webpack_require__(13),ia=__webpack_require__(14),D=__webpack_require__(5);
+var aa=__webpack_require__(1),l=__webpack_require__(10),B=__webpack_require__(5),C=__webpack_require__(3),ba=__webpack_require__(11),da=__webpack_require__(12),ea=__webpack_require__(13),fa=__webpack_require__(14),ia=__webpack_require__(15),D=__webpack_require__(6);
 function E(a){for(var b=arguments.length-1,c="Minified React error #"+a+"; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d"+a,d=0;d<b;d++)c+="\x26args[]\x3d"+encodeURIComponent(arguments[d+1]);b=Error(c+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings.");b.name="Invariant Violation";b.framesToPop=1;throw b;}aa?void 0:E("227");
 var oa={children:!0,dangerouslySetInnerHTML:!0,defaultValue:!0,defaultChecked:!0,innerHTML:!0,suppressContentEditableWarning:!0,suppressHydrationWarning:!0,style:!0};function pa(a,b){return(a&b)===b}
 var ta={MUST_USE_PROPERTY:1,HAS_BOOLEAN_VALUE:4,HAS_NUMERIC_VALUE:8,HAS_POSITIVE_NUMERIC_VALUE:24,HAS_OVERLOADED_BOOLEAN_VALUE:32,HAS_STRING_BOOLEAN_VALUE:64,injectDOMPropertyConfig:function(a){var b=ta,c=a.Properties||{},d=a.DOMAttributeNamespaces||{},e=a.DOMAttributeNames||{};a=a.DOMMutationMethods||{};for(var f in c){ua.hasOwnProperty(f)?E("48",f):void 0;var g=f.toLowerCase(),h=c[f];g={attributeName:g,attributeNamespace:null,propertyName:f,mutationMethod:null,mustUseProperty:pa(h,b.MUST_USE_PROPERTY),
@@ -2833,19 +2837,19 @@ if (process.env.NODE_ENV !== "production") {
   (function() {
 'use strict';
 
-var React = __webpack_require__(2);
-var invariant = __webpack_require__(6);
-var warning = __webpack_require__(7);
-var ExecutionEnvironment = __webpack_require__(9);
-var _assign = __webpack_require__(4);
+var React = __webpack_require__(1);
+var invariant = __webpack_require__(7);
+var warning = __webpack_require__(8);
+var ExecutionEnvironment = __webpack_require__(10);
+var _assign = __webpack_require__(5);
 var emptyFunction = __webpack_require__(3);
-var EventListener = __webpack_require__(10);
-var getActiveElement = __webpack_require__(11);
-var shallowEqual = __webpack_require__(12);
-var containsNode = __webpack_require__(13);
-var focusNode = __webpack_require__(14);
-var emptyObject = __webpack_require__(5);
-var checkPropTypes = __webpack_require__(8);
+var EventListener = __webpack_require__(11);
+var getActiveElement = __webpack_require__(12);
+var shallowEqual = __webpack_require__(13);
+var containsNode = __webpack_require__(14);
+var focusNode = __webpack_require__(15);
+var emptyObject = __webpack_require__(6);
+var checkPropTypes = __webpack_require__(9);
 var hyphenateStyleName = __webpack_require__(26);
 var camelizeStyleName = __webpack_require__(28);
 
@@ -18211,7 +18215,7 @@ module.exports = reactDom;
   })();
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
 /* 26 */
@@ -18393,13 +18397,16 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 }
 Object.defineProperty(exports, "__esModule", { value: true });
-var React = __importStar(__webpack_require__(2));
-var SampleInput_1 = __webpack_require__(31);
-var Step_1 = __webpack_require__(32);
-var Suggestions_1 = __webpack_require__(33);
-var recognize_1 = __webpack_require__(35);
-var layout_1 = __webpack_require__(51);
-var defaultSample_1 = __webpack_require__(54);
+var React = __importStar(__webpack_require__(1));
+var RegexOutput_1 = __webpack_require__(31);
+var SampleInput_1 = __webpack_require__(32);
+var Step_1 = __webpack_require__(33);
+var Suggestions_1 = __webpack_require__(34);
+var recognize_1 = __webpack_require__(36);
+var regexFromMatches_1 = __webpack_require__(52);
+var layout_1 = __webpack_require__(57);
+var defaultSample_1 = __webpack_require__(60);
+var selection_1 = __webpack_require__(61);
 var App = /** @class */ (function (_super) {
     __extends(App, _super);
     function App() {
@@ -18409,18 +18416,13 @@ var App = /** @class */ (function (_super) {
             _this.setState({ sample: sample, selected: [] });
         };
         _this.handleSelect = function (box) {
-            var match = box.match;
-            var exists = _this.state.selected.some(function (picked) {
-                return picked.start === match.start && picked.end === match.end && picked.name === match.name;
-            });
-            if (!exists) {
-                _this.setState({ selected: _this.state.selected.concat(match) });
-            }
+            _this.setState({ selected: selection_1.toggleSelection(_this.state.selected, box.match) });
         };
         return _this;
     }
     App.prototype.render = function () {
         var boxes = layout_1.layoutSuggestions(recognize_1.recognize(this.state.sample));
+        var regex = regexFromMatches_1.buildRegexFromMatches(this.state.sample, this.state.selected);
         return (React.createElement("div", { className: "app" },
             React.createElement("header", { className: "app-header" },
                 React.createElement("h1", { className: "app-title" }, "Regex Generator")),
@@ -18429,7 +18431,10 @@ var App = /** @class */ (function (_super) {
                     React.createElement(SampleInput_1.SampleInput, { value: this.state.sample, onChange: this.handleChange }),
                     React.createElement("p", { className: "sample-hint" }, "Give us an example of the text you want to match using your regex.")),
                 React.createElement(Step_1.Step, { index: 2, title: "Which parts of the text are interesting for you?" },
-                    React.createElement(Suggestions_1.Suggestions, { text: this.state.sample, boxes: boxes, onSelect: this.handleSelect })))));
+                    React.createElement(Suggestions_1.Suggestions, { text: this.state.sample, boxes: boxes, selected: this.state.selected, onSelect: this.handleSelect }),
+                    React.createElement("p", { className: "suggestions-hint" }, "Click on the marked suggestions to select them for your regular expression.")),
+                React.createElement(Step_1.Step, { index: 3, title: "Regular Expression" },
+                    React.createElement(RegexOutput_1.RegexOutput, { regex: regex })))));
     };
     return App;
 }(React.Component));
@@ -18450,11 +18455,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 }
 Object.defineProperty(exports, "__esModule", { value: true });
-var React = __importStar(__webpack_require__(2));
-function SampleInput(props) {
-    return (React.createElement("input", { className: "sample-input", type: "text", value: props.value, onChange: function (event) { return props.onChange(event.target.value); } }));
+var React = __importStar(__webpack_require__(1));
+function RegexOutput(props) {
+    return (React.createElement("div", { className: "regex-output" },
+        React.createElement("pre", { className: "regex-output-value" }, props.regex)));
 }
-exports.SampleInput = SampleInput;
+exports.RegexOutput = RegexOutput;
 
 
 /***/ }),
@@ -18471,15 +18477,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 }
 Object.defineProperty(exports, "__esModule", { value: true });
-var React = __importStar(__webpack_require__(2));
-function Step(props) {
-    return (React.createElement("section", { className: "step" },
-        React.createElement("div", { className: "step-number" }, props.index),
-        React.createElement("div", { className: "step-body" },
-            React.createElement("h2", { className: "step-title" }, props.title),
-            React.createElement("div", { className: "step-content" }, props.children))));
+var React = __importStar(__webpack_require__(1));
+function SampleInput(props) {
+    return (React.createElement("input", { className: "sample-input", type: "text", value: props.value, onChange: function (event) { return props.onChange(event.target.value); } }));
 }
-exports.Step = Step;
+exports.SampleInput = SampleInput;
 
 
 /***/ }),
@@ -18496,14 +18498,15 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 }
 Object.defineProperty(exports, "__esModule", { value: true });
-var React = __importStar(__webpack_require__(2));
-var SuggestionBoxView_1 = __webpack_require__(34);
-function Suggestions(props) {
-    return (React.createElement("div", { className: "suggestions" },
-        React.createElement("pre", { className: "suggestions-text" }, props.text),
-        React.createElement("div", { className: "suggestions-boxes" }, props.boxes.map(function (box, index) { return (React.createElement(SuggestionBoxView_1.SuggestionBoxView, { key: index, box: box, onSelect: props.onSelect })); }))));
+var React = __importStar(__webpack_require__(1));
+function Step(props) {
+    return (React.createElement("section", { className: "step" },
+        React.createElement("div", { className: "step-number" }, props.index),
+        React.createElement("div", { className: "step-body" },
+            React.createElement("h2", { className: "step-title" }, props.title),
+            React.createElement("div", { className: "step-content" }, props.children))));
 }
-exports.Suggestions = Suggestions;
+exports.Step = Step;
 
 
 /***/ }),
@@ -18520,18 +18523,16 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 }
 Object.defineProperty(exports, "__esModule", { value: true });
-var React = __importStar(__webpack_require__(2));
-function SuggestionBoxView(props) {
-    var box = props.box;
-    var style = {
-        left: box.left + "ch",
-        width: box.width + "ch",
-        top: box.row * 1.4 + "em",
-        backgroundColor: box.color
-    };
-    return (React.createElement("div", { className: "suggestion-box", style: style, title: box.match.name, onClick: function () { return props.onSelect(box); } }));
+var React = __importStar(__webpack_require__(1));
+var match_1 = __webpack_require__(4);
+var SuggestionBoxView_1 = __webpack_require__(35);
+function Suggestions(props) {
+    var selectedKeys = props.selected.map(match_1.matchKey);
+    return (React.createElement("div", { className: "suggestions" },
+        React.createElement("pre", { className: "suggestions-text" }, props.text),
+        React.createElement("div", { className: "suggestions-boxes" }, props.boxes.map(function (box, index) { return (React.createElement(SuggestionBoxView_1.SuggestionBoxView, { key: index, box: box, selected: selectedKeys.indexOf(match_1.matchKey(box.match)) >= 0, onSelect: props.onSelect })); }))));
 }
-exports.SuggestionBoxView = SuggestionBoxView;
+exports.Suggestions = Suggestions;
 
 
 /***/ }),
@@ -18540,8 +18541,37 @@ exports.SuggestionBoxView = SuggestionBoxView;
 
 "use strict";
 
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+}
 Object.defineProperty(exports, "__esModule", { value: true });
-var registry_1 = __webpack_require__(36);
+var React = __importStar(__webpack_require__(1));
+function SuggestionBoxView(props) {
+    var box = props.box;
+    var style = {
+        left: box.left + "ch",
+        width: box.width + "ch",
+        top: box.row * 1.4 + "em",
+        backgroundColor: box.color
+    };
+    var className = props.selected ? "suggestion-box suggestion-box-selected" : "suggestion-box";
+    return (React.createElement("div", { className: className, style: style, title: box.match.name, onClick: function () { return props.onSelect(box); } }));
+}
+exports.SuggestionBoxView = SuggestionBoxView;
+
+
+/***/ }),
+/* 36 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var registry_1 = __webpack_require__(37);
 function recognize(text, recognizers) {
     if (recognizers === void 0) { recognizers = registry_1.defaultRecognizers; }
     var matches = [];
@@ -18558,26 +18588,26 @@ exports.recognize = recognize;
 
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var digits_1 = __webpack_require__(37);
-var doubleQuoted_1 = __webpack_require__(38);
-var email_1 = __webpack_require__(39);
-var hashtag_1 = __webpack_require__(40);
-var hex_1 = __webpack_require__(41);
-var ipv4_1 = __webpack_require__(42);
-var isoTimestamp_1 = __webpack_require__(43);
-var letters_1 = __webpack_require__(44);
-var logLevel_1 = __webpack_require__(45);
-var singleQuoted_1 = __webpack_require__(46);
-var url_1 = __webpack_require__(47);
-var uuid_1 = __webpack_require__(48);
-var whitespace_1 = __webpack_require__(49);
-var word_1 = __webpack_require__(50);
+var digits_1 = __webpack_require__(38);
+var doubleQuoted_1 = __webpack_require__(39);
+var email_1 = __webpack_require__(40);
+var hashtag_1 = __webpack_require__(41);
+var hex_1 = __webpack_require__(42);
+var ipv4_1 = __webpack_require__(43);
+var isoTimestamp_1 = __webpack_require__(44);
+var letters_1 = __webpack_require__(45);
+var logLevel_1 = __webpack_require__(46);
+var singleQuoted_1 = __webpack_require__(47);
+var url_1 = __webpack_require__(48);
+var uuid_1 = __webpack_require__(49);
+var whitespace_1 = __webpack_require__(50);
+var word_1 = __webpack_require__(51);
 exports.defaultRecognizers = [
     isoTimestamp_1.isoTimestamp,
     logLevel_1.logLevel,
@@ -18597,7 +18627,7 @@ exports.defaultRecognizers = [
 
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18608,7 +18638,7 @@ exports.digits = recognizer_1.regexRecognizer("Number", "\\d+");
 
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18619,7 +18649,7 @@ exports.doubleQuoted = recognizer_1.regexRecognizer("Double quoted", '"[^"]*"');
 
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18630,7 +18660,7 @@ exports.email = recognizer_1.regexRecognizer("Email", "[\\w.+-]+@[\\w-]+\\.[\\w.
 
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18641,7 +18671,7 @@ exports.hashtag = recognizer_1.regexRecognizer("Hashtag", "#\\w+");
 
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18652,7 +18682,7 @@ exports.hex = recognizer_1.regexRecognizer("Hex number", "\\b0x[0-9a-fA-F]+\\b",
 
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18663,7 +18693,7 @@ exports.ipv4 = recognizer_1.regexRecognizer("IPv4 address", "(?:\\d{1,3}\\.){3}\
 
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18674,7 +18704,7 @@ exports.isoTimestamp = recognizer_1.regexRecognizer("ISO timestamp", "\\d{4}-\\d
 
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18685,7 +18715,7 @@ exports.letters = recognizer_1.regexRecognizer("Letters", "[A-Za-z]+");
 
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18696,7 +18726,7 @@ exports.logLevel = recognizer_1.regexRecognizer("Log level", "\\b(?:TRACE|DEBUG|
 
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18707,7 +18737,7 @@ exports.singleQuoted = recognizer_1.regexRecognizer("Single quoted", "'[^']*'");
 
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18718,7 +18748,7 @@ exports.url = recognizer_1.regexRecognizer("URL", "https?://[^\\s]+");
 
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18729,7 +18759,7 @@ exports.uuid = recognizer_1.regexRecognizer("UUID", "[0-9a-fA-F]{8}-[0-9a-fA-F]{
 
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18740,7 +18770,7 @@ exports.whitespace = recognizer_1.regexRecognizer("Whitespace", "\\s+");
 
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18751,14 +18781,108 @@ exports.word = recognizer_1.regexRecognizer("Word", "\\w+");
 
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var color_1 = __webpack_require__(52);
-var rows_1 = __webpack_require__(53);
+var build_1 = __webpack_require__(53);
+var segmentize_1 = __webpack_require__(55);
+function buildRegexFromMatches(text, matches) {
+    return build_1.buildRegex(segmentize_1.matchesToSegments(text, matches));
+}
+exports.buildRegexFromMatches = buildRegexFromMatches;
+
+
+/***/ }),
+/* 53 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var escapeLiteral_1 = __webpack_require__(54);
+function buildRegex(segments) {
+    return segments
+        .map(function (segment) { return (segment.kind === "literal" ? escapeLiteral_1.escapeLiteral(segment.text) : segment.pattern); })
+        .join("");
+}
+exports.buildRegex = buildRegex;
+
+
+/***/ }),
+/* 54 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var SPECIAL = /[.*+?^${}()|[\]\\]/g;
+function escapeLiteral(input) {
+    return input.replace(SPECIAL, "\\$&");
+}
+exports.escapeLiteral = escapeLiteral;
+
+
+/***/ }),
+/* 55 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var match_1 = __webpack_require__(4);
+var segment_1 = __webpack_require__(56);
+function matchesToSegments(text, matches) {
+    var sorted = match_1.sortMatches(matches);
+    var segments = [];
+    var cursor = 0;
+    for (var _i = 0, sorted_1 = sorted; _i < sorted_1.length; _i++) {
+        var match = sorted_1[_i];
+        if (match.start < cursor) {
+            continue;
+        }
+        if (match.start > cursor) {
+            segments.push(segment_1.literal(text.slice(cursor, match.start)));
+        }
+        segments.push(segment_1.pattern(match.pattern));
+        cursor = match.end;
+    }
+    if (cursor < text.length) {
+        segments.push(segment_1.literal(text.slice(cursor)));
+    }
+    return segments;
+}
+exports.matchesToSegments = matchesToSegments;
+
+
+/***/ }),
+/* 56 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+function literal(text) {
+    return { kind: "literal", text: text };
+}
+exports.literal = literal;
+function pattern(expression) {
+    return { kind: "pattern", pattern: expression };
+}
+exports.pattern = pattern;
+
+
+/***/ }),
+/* 57 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var color_1 = __webpack_require__(58);
+var rows_1 = __webpack_require__(59);
 function layoutSuggestions(matches) {
     var rows = rows_1.assignRows(matches);
     var boxes = [];
@@ -18784,7 +18908,7 @@ exports.rowCount = rowCount;
 
 
 /***/ }),
-/* 52 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18806,13 +18930,13 @@ exports.colorFor = colorFor;
 
 
 /***/ }),
-/* 53 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var match_1 = __webpack_require__(15);
+var match_1 = __webpack_require__(4);
 function assignRows(matches) {
     var sorted = match_1.sortMatches(matches);
     var rows = [];
@@ -18838,7 +18962,7 @@ exports.assignRows = assignRows;
 
 
 /***/ }),
-/* 54 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18848,11 +18972,29 @@ exports.defaultSample = "2020-03-12T13:34:56.123Z INFO  [org.example.Class]: Thi
 
 
 /***/ }),
-/* 55 */
+/* 61 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var match_1 = __webpack_require__(4);
+function toggleSelection(selected, match) {
+    var key = match_1.matchKey(match);
+    if (selected.some(function (picked) { return match_1.matchKey(picked) === key; })) {
+        return selected.filter(function (picked) { return match_1.matchKey(picked) !== key; });
+    }
+    return selected.filter(function (picked) { return !match_1.overlaps(picked, match); }).concat(match);
+}
+exports.toggleSelection = toggleSelection;
+
+
+/***/ }),
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(56);
+var content = __webpack_require__(63);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -18866,7 +19008,7 @@ var options = {"hmr":true}
 options.transform = transform
 options.insertInto = undefined;
 
-var update = __webpack_require__(58)(content, options);
+var update = __webpack_require__(65)(content, options);
 
 if(content.locals) module.exports = content.locals;
 
@@ -18898,21 +19040,21 @@ if(false) {
 }
 
 /***/ }),
-/* 56 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(57)(false);
+exports = module.exports = __webpack_require__(64)(false);
 // imports
 
 
 // module
-exports.push([module.i, "* {\n  box-sizing: border-box;\n}\n\nbody {\n  margin: 0;\n  font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif;\n  color: #202124;\n  background: #ffffff;\n}\n\n.app-header {\n  background: #202124;\n  border-top: 6px solid #b8860b;\n  padding: 16px 24px;\n}\n\n.app-title {\n  margin: 0;\n  color: #ffffff;\n  font-size: 20px;\n}\n\n.app-steps {\n  max-width: 1200px;\n  margin: 0 auto;\n  padding: 24px;\n}\n\n.step {\n  display: flex;\n  align-items: flex-start;\n  padding: 24px 0;\n  border-bottom: 1px solid #eeeeee;\n}\n\n.step-number {\n  flex: none;\n  width: 72px;\n  font-size: 48px;\n  font-weight: 300;\n  color: #dadce0;\n}\n\n.step-body {\n  flex: 1;\n  min-width: 0;\n}\n\n.step-title {\n  margin: 0 0 12px;\n  font-size: 20px;\n}\n\n.sample-input {\n  width: 100%;\n  padding: 12px;\n  font-family: Consolas, Menlo, monospace;\n  font-size: 15px;\n  border: 1px solid #dadce0;\n  border-radius: 4px;\n}\n\n.sample-hint {\n  color: #5f6368;\n  font-size: 14px;\n}\n\n.suggestions {\n  font-family: Consolas, Menlo, monospace;\n  font-size: 15px;\n  overflow-x: auto;\n}\n\n.suggestions-text {\n  margin: 0;\n  white-space: pre;\n}\n\n.suggestions-boxes {\n  position: relative;\n  height: 140px;\n}\n\n.suggestion-box {\n  position: absolute;\n  height: 1.2em;\n  border-radius: 2px;\n  cursor: pointer;\n  opacity: 0.85;\n}\n\n.suggestion-box:hover {\n  opacity: 1;\n  outline: 2px solid #202124;\n}\n", ""]);
+exports.push([module.i, "* {\n  box-sizing: border-box;\n}\n\nbody {\n  margin: 0;\n  font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif;\n  color: #202124;\n  background: #ffffff;\n}\n\n.app-header {\n  background: #202124;\n  border-top: 6px solid #b8860b;\n  padding: 16px 24px;\n}\n\n.app-title {\n  margin: 0;\n  color: #ffffff;\n  font-size: 20px;\n}\n\n.app-steps {\n  max-width: 1200px;\n  margin: 0 auto;\n  padding: 24px;\n}\n\n.step {\n  display: flex;\n  align-items: flex-start;\n  padding: 24px 0;\n  border-bottom: 1px solid #eeeeee;\n}\n\n.step-number {\n  flex: none;\n  width: 72px;\n  font-size: 48px;\n  font-weight: 300;\n  color: #dadce0;\n}\n\n.step-body {\n  flex: 1;\n  min-width: 0;\n}\n\n.step-title {\n  margin: 0 0 12px;\n  font-size: 20px;\n}\n\n.sample-input {\n  width: 100%;\n  padding: 12px;\n  font-family: Consolas, Menlo, monospace;\n  font-size: 15px;\n  border: 1px solid #dadce0;\n  border-radius: 4px;\n}\n\n.sample-hint {\n  color: #5f6368;\n  font-size: 14px;\n}\n\n.suggestions {\n  font-family: Consolas, Menlo, monospace;\n  font-size: 15px;\n  overflow-x: auto;\n}\n\n.suggestions-text {\n  margin: 0;\n  white-space: pre;\n}\n\n.suggestions-boxes {\n  position: relative;\n  height: 140px;\n}\n\n.suggestion-box {\n  position: absolute;\n  height: 1.2em;\n  border-radius: 2px;\n  cursor: pointer;\n  opacity: 0.85;\n}\n\n.suggestion-box:hover {\n  opacity: 1;\n  outline: 2px solid #202124;\n}\n\n.suggestion-box-selected {\n  opacity: 1;\n  box-shadow: inset 0 0 0 2px #202124;\n}\n\n.suggestions-hint {\n  margin-top: 12px;\n  color: #5f6368;\n  font-size: 14px;\n}\n\n.regex-output-value {\n  margin: 0;\n  padding: 12px;\n  font-family: Consolas, Menlo, monospace;\n  font-size: 15px;\n  background: #f1f3f4;\n  border: 1px solid #dadce0;\n  border-radius: 4px;\n  white-space: pre-wrap;\n  word-break: break-all;\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 57 */
+/* 64 */
 /***/ (function(module, exports) {
 
 /*
@@ -18994,7 +19136,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 58 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -19060,7 +19202,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(59);
+var	fixUrls = __webpack_require__(66);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -19376,7 +19518,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 59 */
+/* 66 */
 /***/ (function(module, exports) {
 
 
