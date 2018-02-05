@@ -1,4 +1,4 @@
-import { defaultOptions, flagsFor } from "./options";
+import { applyOptions, defaultOptions, flagsFor } from "./options";
 
 describe("regex options", () => {
   it("defaults to no options", () => {
@@ -23,5 +23,13 @@ describe("regex options", () => {
 
   it("orders global before case insensitive", () => {
     expect(flagsFor({ caseInsensitive: true, wholeLine: false, global: true })).toBe("gi");
+  });
+
+  it("leaves the regex unchanged without whole line", () => {
+    expect(applyOptions("abc", defaultOptions)).toBe("abc");
+  });
+
+  it("anchors the regex for whole line", () => {
+    expect(applyOptions("abc", { ...defaultOptions, wholeLine: true })).toBe("^abc$");
   });
 });

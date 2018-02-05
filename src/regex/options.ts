@@ -20,3 +20,7 @@ export function flagsFor(options: RegexOptions): string {
   }
   return flags;
 }
+
+export function applyOptions(regex: string, options: RegexOptions): string {
+  return options.wholeLine ? `^${regex}$` : regex;
+}
