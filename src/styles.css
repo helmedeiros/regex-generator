@@ -117,3 +117,35 @@ body {
   white-space: pre-wrap;
   word-break: break-all;
 }
+
+.options-block {
+  padding-left: 96px;
+}
+
+.collapsible {
+  margin: 8px 0;
+}
+
+.collapsible-toggle {
+  padding: 0;
+  background: none;
+  border: none;
+  font-size: 18px;
+  font-weight: 600;
+  color: #202124;
+  cursor: pointer;
+}
+
+.collapsible-body {
+  padding: 12px 0;
+}
+
+.option {
+  display: block;
+  margin: 6px 0;
+  color: #3c4043;
+}
+
+.option input {
+  margin-right: 8px;
+}
