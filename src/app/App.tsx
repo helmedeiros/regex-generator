@@ -1,10 +1,12 @@
 import * as React from "react";
+import { OptionsPanel } from "../components/OptionsPanel";
 import { RegexOutput } from "../components/RegexOutput";
 import { SampleInput } from "../components/SampleInput";
 import { Step } from "../components/Step";
 import { Suggestions } from "../components/Suggestions";
 import { recognize } from "../recognizers/recognize";
 import { Match } from "../regex/match";
+import { applyOptions, defaultOptions, RegexOptions } from "../regex/options";
 import { buildRegexFromMatches } from "../regex/regexFromMatches";
 import { layoutSuggestions, SuggestionBox } from "../suggestions/layout";
 import { defaultSample } from "./defaultSample";
@@ -13,14 +15,18 @@ import { toggleSelection } from "./selection";
 export interface AppState {
   sample: string;
   selected: Match[];
+  options: RegexOptions;
 }
 
 export class App extends React.Component<{}, AppState> {
-  public state: AppState = { sample: defaultSample, selected: [] };
+  public state: AppState = { sample: defaultSample, selected: [], options: defaultOptions };
 
   public render() {
     const boxes = layoutSuggestions(recognize(this.state.sample));
-    const regex = buildRegexFromMatches(this.state.sample, this.state.selected);
+    const regex = applyOptions(
+      buildRegexFromMatches(this.state.sample, this.state.selected),
+      this.state.options
+    );
     return (
       <div className="app">
         <header className="app-header">
@@ -44,6 +50,9 @@ export class App extends React.Component<{}, AppState> {
               Click on the marked suggestions to select them for your regular expression.
             </p>
           </Step>
+          <div className="options-block">
+            <OptionsPanel options={this.state.options} onChange={this.handleOptions} />
+          </div>
           <Step index={3} title="Regular Expression">
             <RegexOutput regex={regex} />
           </Step>
@@ -58,5 +67,9 @@ export class App extends React.Component<{}, AppState> {
 
   private handleSelect = (box: SuggestionBox) => {
     this.setState({ selected: toggleSelection(this.state.selected, box.match) });
+  };
+
+  private handleOptions = (options: RegexOptions) => {
+    this.setState({ options });
   };
 }

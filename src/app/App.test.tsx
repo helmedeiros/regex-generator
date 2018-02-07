@@ -1,5 +1,6 @@
 import { shallow } from "enzyme";
 import * as React from "react";
+import { OptionsPanel } from "../components/OptionsPanel";
 import { RegexOutput } from "../components/RegexOutput";
 import { SampleInput } from "../components/SampleInput";
 import { Suggestions } from "../components/Suggestions";
@@ -52,5 +53,21 @@ describe("App", () => {
         .find(RegexOutput)
         .prop("regex")
     ).toBe(buildRegexFromMatches(defaultSample, []));
+  });
+
+  it("renders the options panel", () => {
+    expect(shallow(<App />).find(OptionsPanel).length).toBe(1);
+  });
+
+  it("anchors the regex when whole line is enabled", () => {
+    const wrapper = shallow(<App />);
+    wrapper.find(OptionsPanel).simulate("change", {
+      caseInsensitive: false,
+      wholeLine: true,
+      global: false
+    });
+    const regex = wrapper.find(RegexOutput).prop("regex") as string;
+    expect(regex.charAt(0)).toBe("^");
+    expect(regex.charAt(regex.length - 1)).toBe("$");
   });
 });
