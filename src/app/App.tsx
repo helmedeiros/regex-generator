@@ -9,6 +9,7 @@ import { Match } from "../regex/match";
 import { applyOptions, defaultOptions, RegexOptions } from "../regex/options";
 import { buildRegexFromMatches } from "../regex/regexFromMatches";
 import { layoutSuggestions, SuggestionBox } from "../suggestions/layout";
+import { copyText } from "./copyText";
 import { defaultSample } from "./defaultSample";
 import { toggleSelection } from "./selection";
 
@@ -23,10 +24,7 @@ export class App extends React.Component<{}, AppState> {
 
   public render() {
     const boxes = layoutSuggestions(recognize(this.state.sample));
-    const regex = applyOptions(
-      buildRegexFromMatches(this.state.sample, this.state.selected),
-      this.state.options
-    );
+    const regex = this.currentRegex();
     return (
       <div className="app">
         <header className="app-header">
@@ -54,7 +52,7 @@ export class App extends React.Component<{}, AppState> {
             <OptionsPanel options={this.state.options} onChange={this.handleOptions} />
           </div>
           <Step index={3} title="Regular Expression">
-            <RegexOutput regex={regex} />
+            <RegexOutput regex={regex} onCopy={this.handleCopy} />
           </Step>
         </main>
       </div>
@@ -71,5 +69,16 @@ export class App extends React.Component<{}, AppState> {
 
   private handleOptions = (options: RegexOptions) => {
     this.setState({ options });
+  };
+
+  private handleCopy = () => {
+    copyText(this.currentRegex());
+  };
+
+  private currentRegex = (): string => {
+    return applyOptions(
+      buildRegexFromMatches(this.state.sample, this.state.selected),
+      this.state.options
+    );
   };
 }
