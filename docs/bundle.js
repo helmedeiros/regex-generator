@@ -1051,7 +1051,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = __importStar(__webpack_require__(1));
 var ReactDOM = __importStar(__webpack_require__(21));
 var App_1 = __webpack_require__(30);
-__webpack_require__(62);
+__webpack_require__(65);
 var root = document.getElementById("root");
 if (root) {
     ReactDOM.render(React.createElement(App_1.App, null), root);
@@ -18398,31 +18398,36 @@ var __importStar = (this && this.__importStar) || function (mod) {
 }
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __importStar(__webpack_require__(1));
-var RegexOutput_1 = __webpack_require__(31);
-var SampleInput_1 = __webpack_require__(32);
-var Step_1 = __webpack_require__(33);
-var Suggestions_1 = __webpack_require__(34);
-var recognize_1 = __webpack_require__(36);
-var regexFromMatches_1 = __webpack_require__(52);
-var layout_1 = __webpack_require__(57);
-var defaultSample_1 = __webpack_require__(60);
-var selection_1 = __webpack_require__(61);
+var OptionsPanel_1 = __webpack_require__(31);
+var RegexOutput_1 = __webpack_require__(33);
+var SampleInput_1 = __webpack_require__(34);
+var Step_1 = __webpack_require__(35);
+var Suggestions_1 = __webpack_require__(36);
+var recognize_1 = __webpack_require__(38);
+var options_1 = __webpack_require__(54);
+var regexFromMatches_1 = __webpack_require__(55);
+var layout_1 = __webpack_require__(60);
+var defaultSample_1 = __webpack_require__(63);
+var selection_1 = __webpack_require__(64);
 var App = /** @class */ (function (_super) {
     __extends(App, _super);
     function App() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.state = { sample: defaultSample_1.defaultSample, selected: [] };
+        _this.state = { sample: defaultSample_1.defaultSample, selected: [], options: options_1.defaultOptions };
         _this.handleChange = function (sample) {
             _this.setState({ sample: sample, selected: [] });
         };
         _this.handleSelect = function (box) {
             _this.setState({ selected: selection_1.toggleSelection(_this.state.selected, box.match) });
         };
+        _this.handleOptions = function (options) {
+            _this.setState({ options: options });
+        };
         return _this;
     }
     App.prototype.render = function () {
         var boxes = layout_1.layoutSuggestions(recognize_1.recognize(this.state.sample));
-        var regex = regexFromMatches_1.buildRegexFromMatches(this.state.sample, this.state.selected);
+        var regex = options_1.applyOptions(regexFromMatches_1.buildRegexFromMatches(this.state.sample, this.state.selected), this.state.options);
         return (React.createElement("div", { className: "app" },
             React.createElement("header", { className: "app-header" },
                 React.createElement("h1", { className: "app-title" }, "Regex Generator")),
@@ -18433,6 +18438,8 @@ var App = /** @class */ (function (_super) {
                 React.createElement(Step_1.Step, { index: 2, title: "Which parts of the text are interesting for you?" },
                     React.createElement(Suggestions_1.Suggestions, { text: this.state.sample, boxes: boxes, selected: this.state.selected, onSelect: this.handleSelect }),
                     React.createElement("p", { className: "suggestions-hint" }, "Click on the marked suggestions to select them for your regular expression.")),
+                React.createElement("div", { className: "options-block" },
+                    React.createElement(OptionsPanel_1.OptionsPanel, { options: this.state.options, onChange: this.handleOptions })),
                 React.createElement(Step_1.Step, { index: 3, title: "Regular Expression" },
                     React.createElement(RegexOutput_1.RegexOutput, { regex: regex })))));
     };
@@ -18443,6 +18450,94 @@ exports.App = App;
 
 /***/ }),
 /* 31 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+}
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __importStar(__webpack_require__(1));
+var Collapsible_1 = __webpack_require__(32);
+function OptionsPanel(props) {
+    var options = props.options, onChange = props.onChange;
+    return (React.createElement(Collapsible_1.Collapsible, { title: "Options" },
+        React.createElement("label", { className: "option" },
+            React.createElement("input", { type: "checkbox", checked: options.caseInsensitive, onChange: function (event) { return onChange(__assign({}, options, { caseInsensitive: event.target.checked })); } }),
+            "Case insensitive"),
+        React.createElement("label", { className: "option" },
+            React.createElement("input", { type: "checkbox", checked: options.wholeLine, onChange: function (event) { return onChange(__assign({}, options, { wholeLine: event.target.checked })); } }),
+            "Match whole line"),
+        React.createElement("label", { className: "option" },
+            React.createElement("input", { type: "checkbox", checked: options.global, onChange: function (event) { return onChange(__assign({}, options, { global: event.target.checked })); } }),
+            "Global")));
+}
+exports.OptionsPanel = OptionsPanel;
+
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+}
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __importStar(__webpack_require__(1));
+var Collapsible = /** @class */ (function (_super) {
+    __extends(Collapsible, _super);
+    function Collapsible() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.state = { open: false };
+        _this.toggle = function () {
+            _this.setState({ open: !_this.state.open });
+        };
+        return _this;
+    }
+    Collapsible.prototype.render = function () {
+        return (React.createElement("div", { className: "collapsible" },
+            React.createElement("button", { type: "button", className: "collapsible-toggle", onClick: this.toggle },
+                this.props.title,
+                " ",
+                this.state.open ? "▲" : "▼"),
+            this.state.open ? React.createElement("div", { className: "collapsible-body" }, this.props.children) : null));
+    };
+    return Collapsible;
+}(React.Component));
+exports.Collapsible = Collapsible;
+
+
+/***/ }),
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18464,7 +18559,7 @@ exports.RegexOutput = RegexOutput;
 
 
 /***/ }),
-/* 32 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18485,7 +18580,7 @@ exports.SampleInput = SampleInput;
 
 
 /***/ }),
-/* 33 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18510,7 +18605,7 @@ exports.Step = Step;
 
 
 /***/ }),
-/* 34 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18525,7 +18620,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __importStar(__webpack_require__(1));
 var match_1 = __webpack_require__(4);
-var SuggestionBoxView_1 = __webpack_require__(35);
+var SuggestionBoxView_1 = __webpack_require__(37);
 function Suggestions(props) {
     var selectedKeys = props.selected.map(match_1.matchKey);
     return (React.createElement("div", { className: "suggestions" },
@@ -18536,7 +18631,7 @@ exports.Suggestions = Suggestions;
 
 
 /***/ }),
-/* 35 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18565,13 +18660,13 @@ exports.SuggestionBoxView = SuggestionBoxView;
 
 
 /***/ }),
-/* 36 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var registry_1 = __webpack_require__(37);
+var registry_1 = __webpack_require__(39);
 function recognize(text, recognizers) {
     if (recognizers === void 0) { recognizers = registry_1.defaultRecognizers; }
     var matches = [];
@@ -18588,26 +18683,26 @@ exports.recognize = recognize;
 
 
 /***/ }),
-/* 37 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var digits_1 = __webpack_require__(38);
-var doubleQuoted_1 = __webpack_require__(39);
-var email_1 = __webpack_require__(40);
-var hashtag_1 = __webpack_require__(41);
-var hex_1 = __webpack_require__(42);
-var ipv4_1 = __webpack_require__(43);
-var isoTimestamp_1 = __webpack_require__(44);
-var letters_1 = __webpack_require__(45);
-var logLevel_1 = __webpack_require__(46);
-var singleQuoted_1 = __webpack_require__(47);
-var url_1 = __webpack_require__(48);
-var uuid_1 = __webpack_require__(49);
-var whitespace_1 = __webpack_require__(50);
-var word_1 = __webpack_require__(51);
+var digits_1 = __webpack_require__(40);
+var doubleQuoted_1 = __webpack_require__(41);
+var email_1 = __webpack_require__(42);
+var hashtag_1 = __webpack_require__(43);
+var hex_1 = __webpack_require__(44);
+var ipv4_1 = __webpack_require__(45);
+var isoTimestamp_1 = __webpack_require__(46);
+var letters_1 = __webpack_require__(47);
+var logLevel_1 = __webpack_require__(48);
+var singleQuoted_1 = __webpack_require__(49);
+var url_1 = __webpack_require__(50);
+var uuid_1 = __webpack_require__(51);
+var whitespace_1 = __webpack_require__(52);
+var word_1 = __webpack_require__(53);
 exports.defaultRecognizers = [
     isoTimestamp_1.isoTimestamp,
     logLevel_1.logLevel,
@@ -18627,7 +18722,7 @@ exports.defaultRecognizers = [
 
 
 /***/ }),
-/* 38 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18638,7 +18733,7 @@ exports.digits = recognizer_1.regexRecognizer("Number", "\\d+");
 
 
 /***/ }),
-/* 39 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18649,7 +18744,7 @@ exports.doubleQuoted = recognizer_1.regexRecognizer("Double quoted", '"[^"]*"');
 
 
 /***/ }),
-/* 40 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18660,7 +18755,7 @@ exports.email = recognizer_1.regexRecognizer("Email", "[\\w.+-]+@[\\w-]+\\.[\\w.
 
 
 /***/ }),
-/* 41 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18671,7 +18766,7 @@ exports.hashtag = recognizer_1.regexRecognizer("Hashtag", "#\\w+");
 
 
 /***/ }),
-/* 42 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18682,7 +18777,7 @@ exports.hex = recognizer_1.regexRecognizer("Hex number", "\\b0x[0-9a-fA-F]+\\b",
 
 
 /***/ }),
-/* 43 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18693,7 +18788,7 @@ exports.ipv4 = recognizer_1.regexRecognizer("IPv4 address", "(?:\\d{1,3}\\.){3}\
 
 
 /***/ }),
-/* 44 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18704,7 +18799,7 @@ exports.isoTimestamp = recognizer_1.regexRecognizer("ISO timestamp", "\\d{4}-\\d
 
 
 /***/ }),
-/* 45 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18715,7 +18810,7 @@ exports.letters = recognizer_1.regexRecognizer("Letters", "[A-Za-z]+");
 
 
 /***/ }),
-/* 46 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18726,7 +18821,7 @@ exports.logLevel = recognizer_1.regexRecognizer("Log level", "\\b(?:TRACE|DEBUG|
 
 
 /***/ }),
-/* 47 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18737,7 +18832,7 @@ exports.singleQuoted = recognizer_1.regexRecognizer("Single quoted", "'[^']*'");
 
 
 /***/ }),
-/* 48 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18748,7 +18843,7 @@ exports.url = recognizer_1.regexRecognizer("URL", "https?://[^\\s]+");
 
 
 /***/ }),
-/* 49 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18759,7 +18854,7 @@ exports.uuid = recognizer_1.regexRecognizer("UUID", "[0-9a-fA-F]{8}-[0-9a-fA-F]{
 
 
 /***/ }),
-/* 50 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18770,7 +18865,7 @@ exports.whitespace = recognizer_1.regexRecognizer("Whitespace", "\\s+");
 
 
 /***/ }),
-/* 51 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18781,14 +18876,43 @@ exports.word = recognizer_1.regexRecognizer("Word", "\\w+");
 
 
 /***/ }),
-/* 52 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var build_1 = __webpack_require__(53);
-var segmentize_1 = __webpack_require__(55);
+exports.defaultOptions = {
+    caseInsensitive: false,
+    wholeLine: false,
+    global: false
+};
+function flagsFor(options) {
+    var flags = "";
+    if (options.global) {
+        flags += "g";
+    }
+    if (options.caseInsensitive) {
+        flags += "i";
+    }
+    return flags;
+}
+exports.flagsFor = flagsFor;
+function applyOptions(regex, options) {
+    return options.wholeLine ? "^" + regex + "$" : regex;
+}
+exports.applyOptions = applyOptions;
+
+
+/***/ }),
+/* 55 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var build_1 = __webpack_require__(56);
+var segmentize_1 = __webpack_require__(58);
 function buildRegexFromMatches(text, matches) {
     return build_1.buildRegex(segmentize_1.matchesToSegments(text, matches));
 }
@@ -18796,13 +18920,13 @@ exports.buildRegexFromMatches = buildRegexFromMatches;
 
 
 /***/ }),
-/* 53 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var escapeLiteral_1 = __webpack_require__(54);
+var escapeLiteral_1 = __webpack_require__(57);
 function buildRegex(segments) {
     return segments
         .map(function (segment) { return (segment.kind === "literal" ? escapeLiteral_1.escapeLiteral(segment.text) : segment.pattern); })
@@ -18812,7 +18936,7 @@ exports.buildRegex = buildRegex;
 
 
 /***/ }),
-/* 54 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18826,14 +18950,14 @@ exports.escapeLiteral = escapeLiteral;
 
 
 /***/ }),
-/* 55 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var match_1 = __webpack_require__(4);
-var segment_1 = __webpack_require__(56);
+var segment_1 = __webpack_require__(59);
 function matchesToSegments(text, matches) {
     var sorted = match_1.sortMatches(matches);
     var segments = [];
@@ -18858,7 +18982,7 @@ exports.matchesToSegments = matchesToSegments;
 
 
 /***/ }),
-/* 56 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18875,14 +18999,14 @@ exports.pattern = pattern;
 
 
 /***/ }),
-/* 57 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var color_1 = __webpack_require__(58);
-var rows_1 = __webpack_require__(59);
+var color_1 = __webpack_require__(61);
+var rows_1 = __webpack_require__(62);
 function layoutSuggestions(matches) {
     var rows = rows_1.assignRows(matches);
     var boxes = [];
@@ -18908,7 +19032,7 @@ exports.rowCount = rowCount;
 
 
 /***/ }),
-/* 58 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18930,7 +19054,7 @@ exports.colorFor = colorFor;
 
 
 /***/ }),
-/* 59 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18962,7 +19086,7 @@ exports.assignRows = assignRows;
 
 
 /***/ }),
-/* 60 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18972,7 +19096,7 @@ exports.defaultSample = "2020-03-12T13:34:56.123Z INFO  [org.example.Class]: Thi
 
 
 /***/ }),
-/* 61 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18990,11 +19114,11 @@ exports.toggleSelection = toggleSelection;
 
 
 /***/ }),
-/* 62 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(63);
+var content = __webpack_require__(66);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -19008,7 +19132,7 @@ var options = {"hmr":true}
 options.transform = transform
 options.insertInto = undefined;
 
-var update = __webpack_require__(65)(content, options);
+var update = __webpack_require__(68)(content, options);
 
 if(content.locals) module.exports = content.locals;
 
@@ -19040,21 +19164,21 @@ if(false) {
 }
 
 /***/ }),
-/* 63 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(64)(false);
+exports = module.exports = __webpack_require__(67)(false);
 // imports
 
 
 // module
-exports.push([module.i, "* {\n  box-sizing: border-box;\n}\n\nbody {\n  margin: 0;\n  font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif;\n  color: #202124;\n  background: #ffffff;\n}\n\n.app-header {\n  background: #202124;\n  border-top: 6px solid #b8860b;\n  padding: 16px 24px;\n}\n\n.app-title {\n  margin: 0;\n  color: #ffffff;\n  font-size: 20px;\n}\n\n.app-steps {\n  max-width: 1200px;\n  margin: 0 auto;\n  padding: 24px;\n}\n\n.step {\n  display: flex;\n  align-items: flex-start;\n  padding: 24px 0;\n  border-bottom: 1px solid #eeeeee;\n}\n\n.step-number {\n  flex: none;\n  width: 72px;\n  font-size: 48px;\n  font-weight: 300;\n  color: #dadce0;\n}\n\n.step-body {\n  flex: 1;\n  min-width: 0;\n}\n\n.step-title {\n  margin: 0 0 12px;\n  font-size: 20px;\n}\n\n.sample-input {\n  width: 100%;\n  padding: 12px;\n  font-family: Consolas, Menlo, monospace;\n  font-size: 15px;\n  border: 1px solid #dadce0;\n  border-radius: 4px;\n}\n\n.sample-hint {\n  color: #5f6368;\n  font-size: 14px;\n}\n\n.suggestions {\n  font-family: Consolas, Menlo, monospace;\n  font-size: 15px;\n  overflow-x: auto;\n}\n\n.suggestions-text {\n  margin: 0;\n  white-space: pre;\n}\n\n.suggestions-boxes {\n  position: relative;\n  height: 140px;\n}\n\n.suggestion-box {\n  position: absolute;\n  height: 1.2em;\n  border-radius: 2px;\n  cursor: pointer;\n  opacity: 0.85;\n}\n\n.suggestion-box:hover {\n  opacity: 1;\n  outline: 2px solid #202124;\n}\n\n.suggestion-box-selected {\n  opacity: 1;\n  box-shadow: inset 0 0 0 2px #202124;\n}\n\n.suggestions-hint {\n  margin-top: 12px;\n  color: #5f6368;\n  font-size: 14px;\n}\n\n.regex-output-value {\n  margin: 0;\n  padding: 12px;\n  font-family: Consolas, Menlo, monospace;\n  font-size: 15px;\n  background: #f1f3f4;\n  border: 1px solid #dadce0;\n  border-radius: 4px;\n  white-space: pre-wrap;\n  word-break: break-all;\n}\n", ""]);
+exports.push([module.i, "* {\n  box-sizing: border-box;\n}\n\nbody {\n  margin: 0;\n  font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif;\n  color: #202124;\n  background: #ffffff;\n}\n\n.app-header {\n  background: #202124;\n  border-top: 6px solid #b8860b;\n  padding: 16px 24px;\n}\n\n.app-title {\n  margin: 0;\n  color: #ffffff;\n  font-size: 20px;\n}\n\n.app-steps {\n  max-width: 1200px;\n  margin: 0 auto;\n  padding: 24px;\n}\n\n.step {\n  display: flex;\n  align-items: flex-start;\n  padding: 24px 0;\n  border-bottom: 1px solid #eeeeee;\n}\n\n.step-number {\n  flex: none;\n  width: 72px;\n  font-size: 48px;\n  font-weight: 300;\n  color: #dadce0;\n}\n\n.step-body {\n  flex: 1;\n  min-width: 0;\n}\n\n.step-title {\n  margin: 0 0 12px;\n  font-size: 20px;\n}\n\n.sample-input {\n  width: 100%;\n  padding: 12px;\n  font-family: Consolas, Menlo, monospace;\n  font-size: 15px;\n  border: 1px solid #dadce0;\n  border-radius: 4px;\n}\n\n.sample-hint {\n  color: #5f6368;\n  font-size: 14px;\n}\n\n.suggestions {\n  font-family: Consolas, Menlo, monospace;\n  font-size: 15px;\n  overflow-x: auto;\n}\n\n.suggestions-text {\n  margin: 0;\n  white-space: pre;\n}\n\n.suggestions-boxes {\n  position: relative;\n  height: 140px;\n}\n\n.suggestion-box {\n  position: absolute;\n  height: 1.2em;\n  border-radius: 2px;\n  cursor: pointer;\n  opacity: 0.85;\n}\n\n.suggestion-box:hover {\n  opacity: 1;\n  outline: 2px solid #202124;\n}\n\n.suggestion-box-selected {\n  opacity: 1;\n  box-shadow: inset 0 0 0 2px #202124;\n}\n\n.suggestions-hint {\n  margin-top: 12px;\n  color: #5f6368;\n  font-size: 14px;\n}\n\n.regex-output-value {\n  margin: 0;\n  padding: 12px;\n  font-family: Consolas, Menlo, monospace;\n  font-size: 15px;\n  background: #f1f3f4;\n  border: 1px solid #dadce0;\n  border-radius: 4px;\n  white-space: pre-wrap;\n  word-break: break-all;\n}\n\n.options-block {\n  padding-left: 96px;\n}\n\n.collapsible {\n  margin: 8px 0;\n}\n\n.collapsible-toggle {\n  padding: 0;\n  background: none;\n  border: none;\n  font-size: 18px;\n  font-weight: 600;\n  color: #202124;\n  cursor: pointer;\n}\n\n.collapsible-body {\n  padding: 12px 0;\n}\n\n.option {\n  display: block;\n  margin: 6px 0;\n  color: #3c4043;\n}\n\n.option input {\n  margin-right: 8px;\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 64 */
+/* 67 */
 /***/ (function(module, exports) {
 
 /*
@@ -19136,7 +19260,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 65 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -19202,7 +19326,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(66);
+var	fixUrls = __webpack_require__(69);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -19518,7 +19642,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 66 */
+/* 69 */
 /***/ (function(module, exports) {
 
 
