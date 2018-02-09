@@ -149,3 +149,26 @@ body {
 .option input {
   margin-right: 8px;
 }
+
+.regex-copy {
+  margin-top: 12px;
+  padding: 8px 16px;
+  background: #1a237e;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.regex-preview {
+  margin: 12px 0 0;
+  font-family: Consolas, Menlo, monospace;
+  font-size: 15px;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.preview-match {
+  background: #fff176;
+  color: inherit;
+}
