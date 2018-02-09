@@ -1,12 +1,14 @@
 import * as React from "react";
 import { OptionsPanel } from "../components/OptionsPanel";
 import { RegexOutput } from "../components/RegexOutput";
+import { RegexPreview } from "../components/RegexPreview";
 import { SampleInput } from "../components/SampleInput";
 import { Step } from "../components/Step";
 import { Suggestions } from "../components/Suggestions";
 import { recognize } from "../recognizers/recognize";
+import { findMatches } from "../regex/findMatches";
 import { Match } from "../regex/match";
-import { applyOptions, defaultOptions, RegexOptions } from "../regex/options";
+import { applyOptions, defaultOptions, flagsFor, RegexOptions } from "../regex/options";
 import { buildRegexFromMatches } from "../regex/regexFromMatches";
 import { layoutSuggestions, SuggestionBox } from "../suggestions/layout";
 import { copyText } from "./copyText";
@@ -25,6 +27,8 @@ export class App extends React.Component<{}, AppState> {
   public render() {
     const boxes = layoutSuggestions(recognize(this.state.sample));
     const regex = this.currentRegex();
+    const core = buildRegexFromMatches(this.state.sample, this.state.selected);
+    const ranges = findMatches(this.state.sample, core, flagsFor(this.state.options));
     return (
       <div className="app">
         <header className="app-header">
@@ -53,6 +57,7 @@ export class App extends React.Component<{}, AppState> {
           </div>
           <Step index={3} title="Regular Expression">
             <RegexOutput regex={regex} onCopy={this.handleCopy} />
+            <RegexPreview text={this.state.sample} ranges={ranges} />
           </Step>
         </main>
       </div>

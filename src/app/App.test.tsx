@@ -2,6 +2,7 @@ import { shallow } from "enzyme";
 import * as React from "react";
 import { OptionsPanel } from "../components/OptionsPanel";
 import { RegexOutput } from "../components/RegexOutput";
+import { RegexPreview } from "../components/RegexPreview";
 import { SampleInput } from "../components/SampleInput";
 import { Suggestions } from "../components/Suggestions";
 import { buildRegexFromMatches } from "../regex/regexFromMatches";
@@ -57,6 +58,13 @@ describe("App", () => {
 
   it("renders the options panel", () => {
     expect(shallow(<App />).find(OptionsPanel).length).toBe(1);
+  });
+
+  it("previews matches of the generated regex on the sample", () => {
+    const ranges = shallow(<App />)
+      .find(RegexPreview)
+      .prop("ranges") as Array<{ start: number; end: number }>;
+    expect(ranges.length).toBeGreaterThan(0);
   });
 
   it("anchors the regex when whole line is enabled", () => {
