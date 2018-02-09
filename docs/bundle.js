@@ -1051,7 +1051,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = __importStar(__webpack_require__(1));
 var ReactDOM = __importStar(__webpack_require__(21));
 var App_1 = __webpack_require__(30);
-__webpack_require__(65);
+__webpack_require__(68);
 var root = document.getElementById("root");
 if (root) {
     ReactDOM.render(React.createElement(App_1.App, null), root);
@@ -18400,15 +18400,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = __importStar(__webpack_require__(1));
 var OptionsPanel_1 = __webpack_require__(31);
 var RegexOutput_1 = __webpack_require__(33);
-var SampleInput_1 = __webpack_require__(34);
-var Step_1 = __webpack_require__(35);
-var Suggestions_1 = __webpack_require__(36);
-var recognize_1 = __webpack_require__(38);
-var options_1 = __webpack_require__(54);
-var regexFromMatches_1 = __webpack_require__(55);
-var layout_1 = __webpack_require__(60);
-var defaultSample_1 = __webpack_require__(63);
-var selection_1 = __webpack_require__(64);
+var RegexPreview_1 = __webpack_require__(34);
+var SampleInput_1 = __webpack_require__(35);
+var Step_1 = __webpack_require__(36);
+var Suggestions_1 = __webpack_require__(37);
+var recognize_1 = __webpack_require__(39);
+var findMatches_1 = __webpack_require__(55);
+var options_1 = __webpack_require__(56);
+var regexFromMatches_1 = __webpack_require__(57);
+var layout_1 = __webpack_require__(62);
+var copyText_1 = __webpack_require__(65);
+var defaultSample_1 = __webpack_require__(66);
+var selection_1 = __webpack_require__(67);
 var App = /** @class */ (function (_super) {
     __extends(App, _super);
     function App() {
@@ -18423,11 +18426,19 @@ var App = /** @class */ (function (_super) {
         _this.handleOptions = function (options) {
             _this.setState({ options: options });
         };
+        _this.handleCopy = function () {
+            copyText_1.copyText(_this.currentRegex());
+        };
+        _this.currentRegex = function () {
+            return options_1.applyOptions(regexFromMatches_1.buildRegexFromMatches(_this.state.sample, _this.state.selected), _this.state.options);
+        };
         return _this;
     }
     App.prototype.render = function () {
         var boxes = layout_1.layoutSuggestions(recognize_1.recognize(this.state.sample));
-        var regex = options_1.applyOptions(regexFromMatches_1.buildRegexFromMatches(this.state.sample, this.state.selected), this.state.options);
+        var regex = this.currentRegex();
+        var core = regexFromMatches_1.buildRegexFromMatches(this.state.sample, this.state.selected);
+        var ranges = findMatches_1.findMatches(this.state.sample, core, options_1.flagsFor(this.state.options));
         return (React.createElement("div", { className: "app" },
             React.createElement("header", { className: "app-header" },
                 React.createElement("h1", { className: "app-title" }, "Regex Generator")),
@@ -18441,7 +18452,8 @@ var App = /** @class */ (function (_super) {
                 React.createElement("div", { className: "options-block" },
                     React.createElement(OptionsPanel_1.OptionsPanel, { options: this.state.options, onChange: this.handleOptions })),
                 React.createElement(Step_1.Step, { index: 3, title: "Regular Expression" },
-                    React.createElement(RegexOutput_1.RegexOutput, { regex: regex })))));
+                    React.createElement(RegexOutput_1.RegexOutput, { regex: regex, onCopy: this.handleCopy }),
+                    React.createElement(RegexPreview_1.RegexPreview, { text: this.state.sample, ranges: ranges })))));
     };
     return App;
 }(React.Component));
@@ -18553,13 +18565,47 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = __importStar(__webpack_require__(1));
 function RegexOutput(props) {
     return (React.createElement("div", { className: "regex-output" },
-        React.createElement("pre", { className: "regex-output-value" }, props.regex)));
+        React.createElement("pre", { className: "regex-output-value" }, props.regex),
+        React.createElement("button", { type: "button", className: "regex-copy", onClick: props.onCopy }, "Copy regex")));
 }
 exports.RegexOutput = RegexOutput;
 
 
 /***/ }),
 /* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+}
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __importStar(__webpack_require__(1));
+function RegexPreview(props) {
+    var pieces = [];
+    var cursor = 0;
+    props.ranges.forEach(function (range, index) {
+        if (range.start > cursor) {
+            pieces.push(props.text.slice(cursor, range.start));
+        }
+        pieces.push(React.createElement("mark", { key: index, className: "preview-match" }, props.text.slice(range.start, range.end)));
+        cursor = range.end;
+    });
+    if (cursor < props.text.length) {
+        pieces.push(props.text.slice(cursor));
+    }
+    return React.createElement("pre", { className: "regex-preview" }, pieces);
+}
+exports.RegexPreview = RegexPreview;
+
+
+/***/ }),
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18580,7 +18626,7 @@ exports.SampleInput = SampleInput;
 
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18605,7 +18651,7 @@ exports.Step = Step;
 
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18620,7 +18666,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __importStar(__webpack_require__(1));
 var match_1 = __webpack_require__(4);
-var SuggestionBoxView_1 = __webpack_require__(37);
+var SuggestionBoxView_1 = __webpack_require__(38);
 function Suggestions(props) {
     var selectedKeys = props.selected.map(match_1.matchKey);
     return (React.createElement("div", { className: "suggestions" },
@@ -18631,7 +18677,7 @@ exports.Suggestions = Suggestions;
 
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18660,13 +18706,13 @@ exports.SuggestionBoxView = SuggestionBoxView;
 
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var registry_1 = __webpack_require__(39);
+var registry_1 = __webpack_require__(40);
 function recognize(text, recognizers) {
     if (recognizers === void 0) { recognizers = registry_1.defaultRecognizers; }
     var matches = [];
@@ -18683,26 +18729,26 @@ exports.recognize = recognize;
 
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var digits_1 = __webpack_require__(40);
-var doubleQuoted_1 = __webpack_require__(41);
-var email_1 = __webpack_require__(42);
-var hashtag_1 = __webpack_require__(43);
-var hex_1 = __webpack_require__(44);
-var ipv4_1 = __webpack_require__(45);
-var isoTimestamp_1 = __webpack_require__(46);
-var letters_1 = __webpack_require__(47);
-var logLevel_1 = __webpack_require__(48);
-var singleQuoted_1 = __webpack_require__(49);
-var url_1 = __webpack_require__(50);
-var uuid_1 = __webpack_require__(51);
-var whitespace_1 = __webpack_require__(52);
-var word_1 = __webpack_require__(53);
+var digits_1 = __webpack_require__(41);
+var doubleQuoted_1 = __webpack_require__(42);
+var email_1 = __webpack_require__(43);
+var hashtag_1 = __webpack_require__(44);
+var hex_1 = __webpack_require__(45);
+var ipv4_1 = __webpack_require__(46);
+var isoTimestamp_1 = __webpack_require__(47);
+var letters_1 = __webpack_require__(48);
+var logLevel_1 = __webpack_require__(49);
+var singleQuoted_1 = __webpack_require__(50);
+var url_1 = __webpack_require__(51);
+var uuid_1 = __webpack_require__(52);
+var whitespace_1 = __webpack_require__(53);
+var word_1 = __webpack_require__(54);
 exports.defaultRecognizers = [
     isoTimestamp_1.isoTimestamp,
     logLevel_1.logLevel,
@@ -18722,7 +18768,7 @@ exports.defaultRecognizers = [
 
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18733,7 +18779,7 @@ exports.digits = recognizer_1.regexRecognizer("Number", "\\d+");
 
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18744,7 +18790,7 @@ exports.doubleQuoted = recognizer_1.regexRecognizer("Double quoted", '"[^"]*"');
 
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18755,7 +18801,7 @@ exports.email = recognizer_1.regexRecognizer("Email", "[\\w.+-]+@[\\w-]+\\.[\\w.
 
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18766,7 +18812,7 @@ exports.hashtag = recognizer_1.regexRecognizer("Hashtag", "#\\w+");
 
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18777,7 +18823,7 @@ exports.hex = recognizer_1.regexRecognizer("Hex number", "\\b0x[0-9a-fA-F]+\\b",
 
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18788,7 +18834,7 @@ exports.ipv4 = recognizer_1.regexRecognizer("IPv4 address", "(?:\\d{1,3}\\.){3}\
 
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18799,7 +18845,7 @@ exports.isoTimestamp = recognizer_1.regexRecognizer("ISO timestamp", "\\d{4}-\\d
 
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18810,7 +18856,7 @@ exports.letters = recognizer_1.regexRecognizer("Letters", "[A-Za-z]+");
 
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18821,7 +18867,7 @@ exports.logLevel = recognizer_1.regexRecognizer("Log level", "\\b(?:TRACE|DEBUG|
 
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18832,7 +18878,7 @@ exports.singleQuoted = recognizer_1.regexRecognizer("Single quoted", "'[^']*'");
 
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18843,7 +18889,7 @@ exports.url = recognizer_1.regexRecognizer("URL", "https?://[^\\s]+");
 
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18854,7 +18900,7 @@ exports.uuid = recognizer_1.regexRecognizer("UUID", "[0-9a-fA-F]{8}-[0-9a-fA-F]{
 
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18865,7 +18911,7 @@ exports.whitespace = recognizer_1.regexRecognizer("Whitespace", "\\s+");
 
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18876,7 +18922,42 @@ exports.word = recognizer_1.regexRecognizer("Word", "\\w+");
 
 
 /***/ }),
-/* 54 */
+/* 55 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+function findMatches(text, pattern, flags) {
+    if (pattern.length === 0) {
+        return [];
+    }
+    var globalFlags = flags.indexOf("g") >= 0 ? flags : flags + "g";
+    var regex;
+    try {
+        regex = new RegExp(pattern, globalFlags);
+    }
+    catch (_a) {
+        return [];
+    }
+    var ranges = [];
+    var hit = regex.exec(text);
+    while (hit !== null) {
+        if (hit[0].length === 0) {
+            regex.lastIndex += 1;
+        }
+        else {
+            ranges.push({ start: hit.index, end: hit.index + hit[0].length });
+        }
+        hit = regex.exec(text);
+    }
+    return ranges;
+}
+exports.findMatches = findMatches;
+
+
+/***/ }),
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18905,14 +18986,14 @@ exports.applyOptions = applyOptions;
 
 
 /***/ }),
-/* 55 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var build_1 = __webpack_require__(56);
-var segmentize_1 = __webpack_require__(58);
+var build_1 = __webpack_require__(58);
+var segmentize_1 = __webpack_require__(60);
 function buildRegexFromMatches(text, matches) {
     return build_1.buildRegex(segmentize_1.matchesToSegments(text, matches));
 }
@@ -18920,13 +19001,13 @@ exports.buildRegexFromMatches = buildRegexFromMatches;
 
 
 /***/ }),
-/* 56 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var escapeLiteral_1 = __webpack_require__(57);
+var escapeLiteral_1 = __webpack_require__(59);
 function buildRegex(segments) {
     return segments
         .map(function (segment) { return (segment.kind === "literal" ? escapeLiteral_1.escapeLiteral(segment.text) : segment.pattern); })
@@ -18936,7 +19017,7 @@ exports.buildRegex = buildRegex;
 
 
 /***/ }),
-/* 57 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18950,14 +19031,14 @@ exports.escapeLiteral = escapeLiteral;
 
 
 /***/ }),
-/* 58 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var match_1 = __webpack_require__(4);
-var segment_1 = __webpack_require__(59);
+var segment_1 = __webpack_require__(61);
 function matchesToSegments(text, matches) {
     var sorted = match_1.sortMatches(matches);
     var segments = [];
@@ -18982,7 +19063,7 @@ exports.matchesToSegments = matchesToSegments;
 
 
 /***/ }),
-/* 59 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18999,14 +19080,14 @@ exports.pattern = pattern;
 
 
 /***/ }),
-/* 60 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var color_1 = __webpack_require__(61);
-var rows_1 = __webpack_require__(62);
+var color_1 = __webpack_require__(63);
+var rows_1 = __webpack_require__(64);
 function layoutSuggestions(matches) {
     var rows = rows_1.assignRows(matches);
     var boxes = [];
@@ -19032,7 +19113,7 @@ exports.rowCount = rowCount;
 
 
 /***/ }),
-/* 61 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19054,7 +19135,7 @@ exports.colorFor = colorFor;
 
 
 /***/ }),
-/* 62 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19086,7 +19167,29 @@ exports.assignRows = assignRows;
 
 
 /***/ }),
-/* 63 */
+/* 65 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+function copyText(text) {
+    var textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.setAttribute("readonly", "true");
+    textarea.style.position = "absolute";
+    textarea.style.left = "-9999px";
+    document.body.appendChild(textarea);
+    textarea.select();
+    var copied = document.execCommand("copy");
+    document.body.removeChild(textarea);
+    return copied;
+}
+exports.copyText = copyText;
+
+
+/***/ }),
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19096,7 +19199,7 @@ exports.defaultSample = "2020-03-12T13:34:56.123Z INFO  [org.example.Class]: Thi
 
 
 /***/ }),
-/* 64 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19114,11 +19217,11 @@ exports.toggleSelection = toggleSelection;
 
 
 /***/ }),
-/* 65 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(66);
+var content = __webpack_require__(69);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -19132,7 +19235,7 @@ var options = {"hmr":true}
 options.transform = transform
 options.insertInto = undefined;
 
-var update = __webpack_require__(68)(content, options);
+var update = __webpack_require__(71)(content, options);
 
 if(content.locals) module.exports = content.locals;
 
@@ -19164,21 +19267,21 @@ if(false) {
 }
 
 /***/ }),
-/* 66 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(67)(false);
+exports = module.exports = __webpack_require__(70)(false);
 // imports
 
 
 // module
-exports.push([module.i, "* {\n  box-sizing: border-box;\n}\n\nbody {\n  margin: 0;\n  font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif;\n  color: #202124;\n  background: #ffffff;\n}\n\n.app-header {\n  background: #202124;\n  border-top: 6px solid #b8860b;\n  padding: 16px 24px;\n}\n\n.app-title {\n  margin: 0;\n  color: #ffffff;\n  font-size: 20px;\n}\n\n.app-steps {\n  max-width: 1200px;\n  margin: 0 auto;\n  padding: 24px;\n}\n\n.step {\n  display: flex;\n  align-items: flex-start;\n  padding: 24px 0;\n  border-bottom: 1px solid #eeeeee;\n}\n\n.step-number {\n  flex: none;\n  width: 72px;\n  font-size: 48px;\n  font-weight: 300;\n  color: #dadce0;\n}\n\n.step-body {\n  flex: 1;\n  min-width: 0;\n}\n\n.step-title {\n  margin: 0 0 12px;\n  font-size: 20px;\n}\n\n.sample-input {\n  width: 100%;\n  padding: 12px;\n  font-family: Consolas, Menlo, monospace;\n  font-size: 15px;\n  border: 1px solid #dadce0;\n  border-radius: 4px;\n}\n\n.sample-hint {\n  color: #5f6368;\n  font-size: 14px;\n}\n\n.suggestions {\n  font-family: Consolas, Menlo, monospace;\n  font-size: 15px;\n  overflow-x: auto;\n}\n\n.suggestions-text {\n  margin: 0;\n  white-space: pre;\n}\n\n.suggestions-boxes {\n  position: relative;\n  height: 140px;\n}\n\n.suggestion-box {\n  position: absolute;\n  height: 1.2em;\n  border-radius: 2px;\n  cursor: pointer;\n  opacity: 0.85;\n}\n\n.suggestion-box:hover {\n  opacity: 1;\n  outline: 2px solid #202124;\n}\n\n.suggestion-box-selected {\n  opacity: 1;\n  box-shadow: inset 0 0 0 2px #202124;\n}\n\n.suggestions-hint {\n  margin-top: 12px;\n  color: #5f6368;\n  font-size: 14px;\n}\n\n.regex-output-value {\n  margin: 0;\n  padding: 12px;\n  font-family: Consolas, Menlo, monospace;\n  font-size: 15px;\n  background: #f1f3f4;\n  border: 1px solid #dadce0;\n  border-radius: 4px;\n  white-space: pre-wrap;\n  word-break: break-all;\n}\n\n.options-block {\n  padding-left: 96px;\n}\n\n.collapsible {\n  margin: 8px 0;\n}\n\n.collapsible-toggle {\n  padding: 0;\n  background: none;\n  border: none;\n  font-size: 18px;\n  font-weight: 600;\n  color: #202124;\n  cursor: pointer;\n}\n\n.collapsible-body {\n  padding: 12px 0;\n}\n\n.option {\n  display: block;\n  margin: 6px 0;\n  color: #3c4043;\n}\n\n.option input {\n  margin-right: 8px;\n}\n", ""]);
+exports.push([module.i, "* {\n  box-sizing: border-box;\n}\n\nbody {\n  margin: 0;\n  font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif;\n  color: #202124;\n  background: #ffffff;\n}\n\n.app-header {\n  background: #202124;\n  border-top: 6px solid #b8860b;\n  padding: 16px 24px;\n}\n\n.app-title {\n  margin: 0;\n  color: #ffffff;\n  font-size: 20px;\n}\n\n.app-steps {\n  max-width: 1200px;\n  margin: 0 auto;\n  padding: 24px;\n}\n\n.step {\n  display: flex;\n  align-items: flex-start;\n  padding: 24px 0;\n  border-bottom: 1px solid #eeeeee;\n}\n\n.step-number {\n  flex: none;\n  width: 72px;\n  font-size: 48px;\n  font-weight: 300;\n  color: #dadce0;\n}\n\n.step-body {\n  flex: 1;\n  min-width: 0;\n}\n\n.step-title {\n  margin: 0 0 12px;\n  font-size: 20px;\n}\n\n.sample-input {\n  width: 100%;\n  padding: 12px;\n  font-family: Consolas, Menlo, monospace;\n  font-size: 15px;\n  border: 1px solid #dadce0;\n  border-radius: 4px;\n}\n\n.sample-hint {\n  color: #5f6368;\n  font-size: 14px;\n}\n\n.suggestions {\n  font-family: Consolas, Menlo, monospace;\n  font-size: 15px;\n  overflow-x: auto;\n}\n\n.suggestions-text {\n  margin: 0;\n  white-space: pre;\n}\n\n.suggestions-boxes {\n  position: relative;\n  height: 140px;\n}\n\n.suggestion-box {\n  position: absolute;\n  height: 1.2em;\n  border-radius: 2px;\n  cursor: pointer;\n  opacity: 0.85;\n}\n\n.suggestion-box:hover {\n  opacity: 1;\n  outline: 2px solid #202124;\n}\n\n.suggestion-box-selected {\n  opacity: 1;\n  box-shadow: inset 0 0 0 2px #202124;\n}\n\n.suggestions-hint {\n  margin-top: 12px;\n  color: #5f6368;\n  font-size: 14px;\n}\n\n.regex-output-value {\n  margin: 0;\n  padding: 12px;\n  font-family: Consolas, Menlo, monospace;\n  font-size: 15px;\n  background: #f1f3f4;\n  border: 1px solid #dadce0;\n  border-radius: 4px;\n  white-space: pre-wrap;\n  word-break: break-all;\n}\n\n.options-block {\n  padding-left: 96px;\n}\n\n.collapsible {\n  margin: 8px 0;\n}\n\n.collapsible-toggle {\n  padding: 0;\n  background: none;\n  border: none;\n  font-size: 18px;\n  font-weight: 600;\n  color: #202124;\n  cursor: pointer;\n}\n\n.collapsible-body {\n  padding: 12px 0;\n}\n\n.option {\n  display: block;\n  margin: 6px 0;\n  color: #3c4043;\n}\n\n.option input {\n  margin-right: 8px;\n}\n\n.regex-copy {\n  margin-top: 12px;\n  padding: 8px 16px;\n  background: #1a237e;\n  color: #ffffff;\n  border: none;\n  border-radius: 4px;\n  cursor: pointer;\n}\n\n.regex-preview {\n  margin: 12px 0 0;\n  font-family: Consolas, Menlo, monospace;\n  font-size: 15px;\n  white-space: pre-wrap;\n  word-break: break-all;\n}\n\n.preview-match {\n  background: #fff176;\n  color: inherit;\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 67 */
+/* 70 */
 /***/ (function(module, exports) {
 
 /*
@@ -19260,7 +19363,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 68 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -19326,7 +19429,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(69);
+var	fixUrls = __webpack_require__(72);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -19642,7 +19745,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 69 */
+/* 72 */
 /***/ (function(module, exports) {
 
 
