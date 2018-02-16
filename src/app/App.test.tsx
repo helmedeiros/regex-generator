@@ -1,5 +1,6 @@
 import { shallow } from "enzyme";
 import * as React from "react";
+import { LanguageSnippets } from "../components/LanguageSnippets";
 import { OptionsPanel } from "../components/OptionsPanel";
 import { RegexOutput } from "../components/RegexOutput";
 import { RegexPreview } from "../components/RegexPreview";
@@ -58,6 +59,10 @@ describe("App", () => {
 
   it("renders the options panel", () => {
     expect(shallow(<App />).find(OptionsPanel).length).toBe(1);
+  });
+
+  it("renders the language snippets", () => {
+    expect(shallow(<App />).find(LanguageSnippets).length).toBe(1);
   });
 
   it("previews matches of the generated regex on the sample", () => {

@@ -1,4 +1,5 @@
 import * as React from "react";
+import { LanguageSnippets } from "../components/LanguageSnippets";
 import { OptionsPanel } from "../components/OptionsPanel";
 import { RegexOutput } from "../components/RegexOutput";
 import { RegexPreview } from "../components/RegexPreview";
@@ -59,6 +60,13 @@ export class App extends React.Component<{}, AppState> {
             <RegexOutput regex={regex} onCopy={this.handleCopy} />
             <RegexPreview text={this.state.sample} ranges={ranges} />
           </Step>
+          <div className="snippets-block">
+            <LanguageSnippets regex={regex} />
+            <p className="snippets-note">
+              Please note that these code samples are automatically generated. They are not
+              guaranteed to work.
+            </p>
+          </div>
         </main>
       </div>
     );
