@@ -6,6 +6,7 @@ import { RegexPreview } from "../components/RegexPreview";
 import { SampleInput } from "../components/SampleInput";
 import { Step } from "../components/Step";
 import { Suggestions } from "../components/Suggestions";
+import { Tour } from "../components/Tour";
 import { recognize } from "../recognizers/recognize";
 import { findMatches } from "../regex/findMatches";
 import { Match } from "../regex/match";
@@ -15,15 +16,22 @@ import { layoutSuggestions, SuggestionBox } from "../suggestions/layout";
 import { copyText } from "./copyText";
 import { defaultSample } from "./defaultSample";
 import { toggleSelection } from "./selection";
+import { tourSteps } from "./tour";
 
 export interface AppState {
   sample: string;
   selected: Match[];
   options: RegexOptions;
+  tourOpen: boolean;
 }
 
 export class App extends React.Component<{}, AppState> {
-  public state: AppState = { sample: defaultSample, selected: [], options: defaultOptions };
+  public state: AppState = {
+    sample: defaultSample,
+    selected: [],
+    options: defaultOptions,
+    tourOpen: true
+  };
 
   public render() {
     const boxes = layoutSuggestions(recognize(this.state.sample));
@@ -34,6 +42,9 @@ export class App extends React.Component<{}, AppState> {
       <div className="app">
         <header className="app-header">
           <h1 className="app-title">Regex Generator</h1>
+          <button type="button" className="help-button" onClick={this.handleOpenTour}>
+            ?
+          </button>
         </header>
         <main className="app-steps">
           <Step index={1} title="Paste a sample text.">
@@ -68,6 +79,7 @@ export class App extends React.Component<{}, AppState> {
             </p>
           </div>
         </main>
+        {this.state.tourOpen ? <Tour steps={tourSteps} onClose={this.handleCloseTour} /> : null}
       </div>
     );
   }
@@ -93,5 +105,13 @@ export class App extends React.Component<{}, AppState> {
       buildRegexFromMatches(this.state.sample, this.state.selected),
       this.state.options
     );
+  };
+
+  private handleOpenTour = () => {
+    this.setState({ tourOpen: true });
+  };
+
+  private handleCloseTour = () => {
+    this.setState({ tourOpen: false });
   };
 }

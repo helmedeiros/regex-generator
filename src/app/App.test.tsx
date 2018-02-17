@@ -6,6 +6,7 @@ import { RegexOutput } from "../components/RegexOutput";
 import { RegexPreview } from "../components/RegexPreview";
 import { SampleInput } from "../components/SampleInput";
 import { Suggestions } from "../components/Suggestions";
+import { Tour } from "../components/Tour";
 import { buildRegexFromMatches } from "../regex/regexFromMatches";
 import { SuggestionBox } from "../suggestions/layout";
 import { App } from "./App";
@@ -63,6 +64,16 @@ describe("App", () => {
 
   it("renders the language snippets", () => {
     expect(shallow(<App />).find(LanguageSnippets).length).toBe(1);
+  });
+
+  it("opens the tour on start", () => {
+    expect(shallow(<App />).find(Tour).length).toBe(1);
+  });
+
+  it("closes the tour", () => {
+    const wrapper = shallow(<App />);
+    wrapper.find(Tour).simulate("close");
+    expect(wrapper.find(Tour).length).toBe(0);
   });
 
   it("previews matches of the generated regex on the sample", () => {
