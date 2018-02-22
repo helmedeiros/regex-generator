@@ -2,7 +2,7 @@ import { defaultRecognizers } from "./registry";
 
 describe("defaultRecognizers", () => {
   it("lists every built-in recognizer", () => {
-    expect(defaultRecognizers.length).toBe(14);
+    expect(defaultRecognizers.length).toBe(24);
   });
 
   it("exposes a name and a find function for each", () => {
