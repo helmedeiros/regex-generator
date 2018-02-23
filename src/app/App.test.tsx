@@ -1,4 +1,4 @@
-import { shallow } from "enzyme";
+import { mount, shallow } from "enzyme";
 import * as React from "react";
 import { LanguageSnippets } from "../components/LanguageSnippets";
 import { OptionsPanel } from "../components/OptionsPanel";
@@ -47,6 +47,12 @@ describe("App", () => {
     const wrapper = shallow(<App />);
     wrapper.find(SampleInput).simulate("change", "new text");
     expect(wrapper.find(SampleInput).prop("value")).toBe("new text");
+  });
+
+  it("stores the sample in the url when it changes", () => {
+    const wrapper = mount(<App />);
+    wrapper.find("input.sample-input").simulate("change", { target: { value: "abc" } });
+    expect(window.location.hash).toBe(encodeSample("abc"));
   });
 
   it("shows a hint for the sample step", () => {

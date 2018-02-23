@@ -17,7 +17,7 @@ import { copyText } from "./copyText";
 import { defaultSample } from "./defaultSample";
 import { toggleSelection } from "./selection";
 import { tourSteps } from "./tour";
-import { decodeSample } from "./urlState";
+import { decodeSample, encodeSample } from "./urlState";
 
 function initialSample(): string {
   const fromUrl = decodeSample(window.location.hash);
@@ -38,6 +38,13 @@ export class App extends React.Component<{}, AppState> {
     options: defaultOptions,
     tourOpen: true
   };
+
+  public componentDidUpdate() {
+    const encoded = encodeSample(this.state.sample);
+    if (window.location.hash !== encoded) {
+      window.location.hash = encoded;
+    }
+  }
 
   public render() {
     const boxes = layoutSuggestions(recognize(this.state.sample));
