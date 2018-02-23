@@ -17,6 +17,12 @@ import { copyText } from "./copyText";
 import { defaultSample } from "./defaultSample";
 import { toggleSelection } from "./selection";
 import { tourSteps } from "./tour";
+import { decodeSample } from "./urlState";
+
+function initialSample(): string {
+  const fromUrl = decodeSample(window.location.hash);
+  return fromUrl !== null ? fromUrl : defaultSample;
+}
 
 export interface AppState {
   sample: string;
@@ -27,7 +33,7 @@ export interface AppState {
 
 export class App extends React.Component<{}, AppState> {
   public state: AppState = {
-    sample: defaultSample,
+    sample: initialSample(),
     selected: [],
     options: defaultOptions,
     tourOpen: true

@@ -11,8 +11,13 @@ import { buildRegexFromMatches } from "../regex/regexFromMatches";
 import { SuggestionBox } from "../suggestions/layout";
 import { App } from "./App";
 import { defaultSample } from "./defaultSample";
+import { encodeSample } from "./urlState";
 
 describe("App", () => {
+  afterEach(() => {
+    window.location.hash = "";
+  });
+
   it("renders the title", () => {
     expect(
       shallow(<App />)
@@ -27,6 +32,15 @@ describe("App", () => {
         .find(SampleInput)
         .prop("value")
     ).toBe(defaultSample);
+  });
+
+  it("restores the sample from the url", () => {
+    window.location.hash = encodeSample("hello world");
+    expect(
+      shallow(<App />)
+        .find(SampleInput)
+        .prop("value")
+    ).toBe("hello world");
   });
 
   it("updates the sample when the input changes", () => {
