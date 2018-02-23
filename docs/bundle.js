@@ -68,21 +68,6 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-if (process.env.NODE_ENV === 'production') {
-  module.exports = __webpack_require__(18);
-} else {
-  module.exports = __webpack_require__(19);
-}
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var match_1 = __webpack_require__(4);
@@ -109,6 +94,21 @@ function regexRecognizer(name, source, pattern) {
 }
 exports.regexRecognizer = regexRecognizer;
 
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+if (process.env.NODE_ENV === 'production') {
+  module.exports = __webpack_require__(18);
+} else {
+  module.exports = __webpack_require__(19);
+}
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
 /* 2 */
@@ -1058,7 +1058,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 }
 Object.defineProperty(exports, "__esModule", { value: true });
-var React = __importStar(__webpack_require__(0));
+var React = __importStar(__webpack_require__(1));
 var Collapsible = /** @class */ (function (_super) {
     __extends(Collapsible, _super);
     function Collapsible() {
@@ -1096,10 +1096,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 }
 Object.defineProperty(exports, "__esModule", { value: true });
-var React = __importStar(__webpack_require__(0));
+var React = __importStar(__webpack_require__(1));
 var ReactDOM = __importStar(__webpack_require__(22));
 var App_1 = __webpack_require__(31);
-__webpack_require__(85);
+__webpack_require__(96);
 var root = document.getElementById("root");
 if (root) {
     ReactDOM.render(React.createElement(App_1.App, null), root);
@@ -2588,7 +2588,7 @@ if (process.env.NODE_ENV === 'production') {
 /*
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(0),l=__webpack_require__(10),B=__webpack_require__(5),C=__webpack_require__(3),ba=__webpack_require__(11),da=__webpack_require__(12),ea=__webpack_require__(13),fa=__webpack_require__(14),ia=__webpack_require__(15),D=__webpack_require__(6);
+var aa=__webpack_require__(1),l=__webpack_require__(10),B=__webpack_require__(5),C=__webpack_require__(3),ba=__webpack_require__(11),da=__webpack_require__(12),ea=__webpack_require__(13),fa=__webpack_require__(14),ia=__webpack_require__(15),D=__webpack_require__(6);
 function E(a){for(var b=arguments.length-1,c="Minified React error #"+a+"; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d"+a,d=0;d<b;d++)c+="\x26args[]\x3d"+encodeURIComponent(arguments[d+1]);b=Error(c+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings.");b.name="Invariant Violation";b.framesToPop=1;throw b;}aa?void 0:E("227");
 var oa={children:!0,dangerouslySetInnerHTML:!0,defaultValue:!0,defaultChecked:!0,innerHTML:!0,suppressContentEditableWarning:!0,suppressHydrationWarning:!0,style:!0};function pa(a,b){return(a&b)===b}
 var ta={MUST_USE_PROPERTY:1,HAS_BOOLEAN_VALUE:4,HAS_NUMERIC_VALUE:8,HAS_POSITIVE_NUMERIC_VALUE:24,HAS_OVERLOADED_BOOLEAN_VALUE:32,HAS_STRING_BOOLEAN_VALUE:64,injectDOMPropertyConfig:function(a){var b=ta,c=a.Properties||{},d=a.DOMAttributeNamespaces||{},e=a.DOMAttributeNames||{};a=a.DOMMutationMethods||{};for(var f in c){ua.hasOwnProperty(f)?E("48",f):void 0;var g=f.toLowerCase(),h=c[f];g={attributeName:g,attributeNamespace:null,propertyName:f,mutationMethod:null,mustUseProperty:pa(h,b.MUST_USE_PROPERTY),
@@ -2885,7 +2885,7 @@ if (process.env.NODE_ENV !== "production") {
   (function() {
 'use strict';
 
-var React = __webpack_require__(0);
+var React = __webpack_require__(1);
 var invariant = __webpack_require__(7);
 var warning = __webpack_require__(8);
 var ExecutionEnvironment = __webpack_require__(10);
@@ -18445,7 +18445,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 }
 Object.defineProperty(exports, "__esModule", { value: true });
-var React = __importStar(__webpack_require__(0));
+var React = __importStar(__webpack_require__(1));
 var LanguageSnippets_1 = __webpack_require__(32);
 var OptionsPanel_1 = __webpack_require__(47);
 var RegexOutput_1 = __webpack_require__(48);
@@ -18455,20 +18455,25 @@ var Step_1 = __webpack_require__(51);
 var Suggestions_1 = __webpack_require__(52);
 var Tour_1 = __webpack_require__(54);
 var recognize_1 = __webpack_require__(55);
-var findMatches_1 = __webpack_require__(71);
-var options_1 = __webpack_require__(72);
-var regexFromMatches_1 = __webpack_require__(73);
-var layout_1 = __webpack_require__(78);
-var copyText_1 = __webpack_require__(81);
-var defaultSample_1 = __webpack_require__(82);
-var selection_1 = __webpack_require__(83);
-var tour_1 = __webpack_require__(84);
+var findMatches_1 = __webpack_require__(81);
+var options_1 = __webpack_require__(82);
+var regexFromMatches_1 = __webpack_require__(83);
+var layout_1 = __webpack_require__(88);
+var copyText_1 = __webpack_require__(91);
+var defaultSample_1 = __webpack_require__(92);
+var selection_1 = __webpack_require__(93);
+var tour_1 = __webpack_require__(94);
+var urlState_1 = __webpack_require__(95);
+function initialSample() {
+    var fromUrl = urlState_1.decodeSample(window.location.hash);
+    return fromUrl !== null ? fromUrl : defaultSample_1.defaultSample;
+}
 var App = /** @class */ (function (_super) {
     __extends(App, _super);
     function App() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.state = {
-            sample: defaultSample_1.defaultSample,
+            sample: initialSample(),
             selected: [],
             options: options_1.defaultOptions,
             tourOpen: true
@@ -18496,6 +18501,12 @@ var App = /** @class */ (function (_super) {
         };
         return _this;
     }
+    App.prototype.componentDidUpdate = function () {
+        var encoded = urlState_1.encodeSample(this.state.sample);
+        if (window.location.hash !== encoded) {
+            window.location.hash = encoded;
+        }
+    };
     App.prototype.render = function () {
         var boxes = layout_1.layoutSuggestions(recognize_1.recognize(this.state.sample));
         var regex = this.currentRegex();
@@ -18551,7 +18562,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 }
 Object.defineProperty(exports, "__esModule", { value: true });
-var React = __importStar(__webpack_require__(0));
+var React = __importStar(__webpack_require__(1));
 var registry_1 = __webpack_require__(33);
 var snippet_1 = __webpack_require__(46);
 var Collapsible_1 = __webpack_require__(16);
@@ -18804,7 +18815,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 }
 Object.defineProperty(exports, "__esModule", { value: true });
-var React = __importStar(__webpack_require__(0));
+var React = __importStar(__webpack_require__(1));
 var Collapsible_1 = __webpack_require__(16);
 function OptionsPanel(props) {
     var options = props.options, onChange = props.onChange;
@@ -18836,7 +18847,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 }
 Object.defineProperty(exports, "__esModule", { value: true });
-var React = __importStar(__webpack_require__(0));
+var React = __importStar(__webpack_require__(1));
 function RegexOutput(props) {
     return (React.createElement("div", { className: "regex-output" },
         React.createElement("pre", { className: "regex-output-value" }, props.regex),
@@ -18859,7 +18870,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 }
 Object.defineProperty(exports, "__esModule", { value: true });
-var React = __importStar(__webpack_require__(0));
+var React = __importStar(__webpack_require__(1));
 function RegexPreview(props) {
     var pieces = [];
     var cursor = 0;
@@ -18892,7 +18903,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 }
 Object.defineProperty(exports, "__esModule", { value: true });
-var React = __importStar(__webpack_require__(0));
+var React = __importStar(__webpack_require__(1));
 function SampleInput(props) {
     return (React.createElement("input", { className: "sample-input", type: "text", value: props.value, onChange: function (event) { return props.onChange(event.target.value); } }));
 }
@@ -18913,7 +18924,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 }
 Object.defineProperty(exports, "__esModule", { value: true });
-var React = __importStar(__webpack_require__(0));
+var React = __importStar(__webpack_require__(1));
 function Step(props) {
     return (React.createElement("section", { className: "step" },
         React.createElement("div", { className: "step-number" }, props.index),
@@ -18938,7 +18949,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 }
 Object.defineProperty(exports, "__esModule", { value: true });
-var React = __importStar(__webpack_require__(0));
+var React = __importStar(__webpack_require__(1));
 var match_1 = __webpack_require__(4);
 var SuggestionBoxView_1 = __webpack_require__(53);
 function Suggestions(props) {
@@ -18964,7 +18975,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 }
 Object.defineProperty(exports, "__esModule", { value: true });
-var React = __importStar(__webpack_require__(0));
+var React = __importStar(__webpack_require__(1));
 function SuggestionBoxView(props) {
     var box = props.box;
     var style = {
@@ -19003,7 +19014,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 }
 Object.defineProperty(exports, "__esModule", { value: true });
-var React = __importStar(__webpack_require__(0));
+var React = __importStar(__webpack_require__(1));
 var Tour = /** @class */ (function (_super) {
     __extends(Tour, _super);
     function Tour() {
@@ -19066,28 +19077,48 @@ exports.recognize = recognize;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var digits_1 = __webpack_require__(57);
-var doubleQuoted_1 = __webpack_require__(58);
-var email_1 = __webpack_require__(59);
-var hashtag_1 = __webpack_require__(60);
-var hex_1 = __webpack_require__(61);
-var ipv4_1 = __webpack_require__(62);
-var isoTimestamp_1 = __webpack_require__(63);
-var letters_1 = __webpack_require__(64);
-var logLevel_1 = __webpack_require__(65);
-var singleQuoted_1 = __webpack_require__(66);
-var url_1 = __webpack_require__(67);
-var uuid_1 = __webpack_require__(68);
-var whitespace_1 = __webpack_require__(69);
-var word_1 = __webpack_require__(70);
+var booleanWord_1 = __webpack_require__(57);
+var creditCard_1 = __webpack_require__(58);
+var currency_1 = __webpack_require__(59);
+var date_1 = __webpack_require__(60);
+var digits_1 = __webpack_require__(61);
+var doubleQuoted_1 = __webpack_require__(62);
+var email_1 = __webpack_require__(63);
+var hashtag_1 = __webpack_require__(64);
+var hex_1 = __webpack_require__(65);
+var hexColor_1 = __webpack_require__(66);
+var ipv4_1 = __webpack_require__(67);
+var isoTimestamp_1 = __webpack_require__(68);
+var letters_1 = __webpack_require__(69);
+var logLevel_1 = __webpack_require__(70);
+var macAddress_1 = __webpack_require__(71);
+var percentage_1 = __webpack_require__(72);
+var phone_1 = __webpack_require__(73);
+var semver_1 = __webpack_require__(74);
+var singleQuoted_1 = __webpack_require__(75);
+var time_1 = __webpack_require__(76);
+var url_1 = __webpack_require__(77);
+var uuid_1 = __webpack_require__(78);
+var whitespace_1 = __webpack_require__(79);
+var word_1 = __webpack_require__(80);
 exports.defaultRecognizers = [
     isoTimestamp_1.isoTimestamp,
+    date_1.date,
+    time_1.time,
     logLevel_1.logLevel,
     uuid_1.uuid,
+    macAddress_1.macAddress,
     ipv4_1.ipv4,
     email_1.email,
     url_1.url,
+    semver_1.semver,
+    hexColor_1.hexColor,
     hex_1.hex,
+    currency_1.currency,
+    percentage_1.percentage,
+    creditCard_1.creditCard,
+    phone_1.phone,
+    booleanWord_1.booleanWord,
     hashtag_1.hashtag,
     singleQuoted_1.singleQuoted,
     doubleQuoted_1.doubleQuoted,
@@ -19105,8 +19136,8 @@ exports.defaultRecognizers = [
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var recognizer_1 = __webpack_require__(1);
-exports.digits = recognizer_1.regexRecognizer("Number", "\\d+");
+var recognizer_1 = __webpack_require__(0);
+exports.booleanWord = recognizer_1.regexRecognizer("Boolean", "\\b(?:true|false)\\b", "(?:true|false)");
 
 
 /***/ }),
@@ -19116,8 +19147,8 @@ exports.digits = recognizer_1.regexRecognizer("Number", "\\d+");
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var recognizer_1 = __webpack_require__(1);
-exports.doubleQuoted = recognizer_1.regexRecognizer("Double quoted", '"[^"]*"');
+var recognizer_1 = __webpack_require__(0);
+exports.creditCard = recognizer_1.regexRecognizer("Credit card", "\\d{4}[ -]?\\d{4}[ -]?\\d{4}[ -]?\\d{4}");
 
 
 /***/ }),
@@ -19127,8 +19158,8 @@ exports.doubleQuoted = recognizer_1.regexRecognizer("Double quoted", '"[^"]*"');
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var recognizer_1 = __webpack_require__(1);
-exports.email = recognizer_1.regexRecognizer("Email", "[\\w.+-]+@[\\w-]+\\.[\\w.-]+");
+var recognizer_1 = __webpack_require__(0);
+exports.currency = recognizer_1.regexRecognizer("Currency amount", "[$€£]\\d+(?:\\.\\d{2})?");
 
 
 /***/ }),
@@ -19138,8 +19169,8 @@ exports.email = recognizer_1.regexRecognizer("Email", "[\\w.+-]+@[\\w-]+\\.[\\w.
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var recognizer_1 = __webpack_require__(1);
-exports.hashtag = recognizer_1.regexRecognizer("Hashtag", "#\\w+");
+var recognizer_1 = __webpack_require__(0);
+exports.date = recognizer_1.regexRecognizer("Date", "\\d{4}-\\d{2}-\\d{2}");
 
 
 /***/ }),
@@ -19149,8 +19180,8 @@ exports.hashtag = recognizer_1.regexRecognizer("Hashtag", "#\\w+");
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var recognizer_1 = __webpack_require__(1);
-exports.hex = recognizer_1.regexRecognizer("Hex number", "\\b0x[0-9a-fA-F]+\\b", "0x[0-9a-fA-F]+");
+var recognizer_1 = __webpack_require__(0);
+exports.digits = recognizer_1.regexRecognizer("Number", "\\d+");
 
 
 /***/ }),
@@ -19160,8 +19191,8 @@ exports.hex = recognizer_1.regexRecognizer("Hex number", "\\b0x[0-9a-fA-F]+\\b",
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var recognizer_1 = __webpack_require__(1);
-exports.ipv4 = recognizer_1.regexRecognizer("IPv4 address", "(?:\\d{1,3}\\.){3}\\d{1,3}", "\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}");
+var recognizer_1 = __webpack_require__(0);
+exports.doubleQuoted = recognizer_1.regexRecognizer("Double quoted", '"[^"]*"');
 
 
 /***/ }),
@@ -19171,8 +19202,8 @@ exports.ipv4 = recognizer_1.regexRecognizer("IPv4 address", "(?:\\d{1,3}\\.){3}\
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var recognizer_1 = __webpack_require__(1);
-exports.isoTimestamp = recognizer_1.regexRecognizer("ISO timestamp", "\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?Z?");
+var recognizer_1 = __webpack_require__(0);
+exports.email = recognizer_1.regexRecognizer("Email", "[\\w.+-]+@[\\w-]+\\.[\\w.-]+");
 
 
 /***/ }),
@@ -19182,8 +19213,8 @@ exports.isoTimestamp = recognizer_1.regexRecognizer("ISO timestamp", "\\d{4}-\\d
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var recognizer_1 = __webpack_require__(1);
-exports.letters = recognizer_1.regexRecognizer("Letters", "[A-Za-z]+");
+var recognizer_1 = __webpack_require__(0);
+exports.hashtag = recognizer_1.regexRecognizer("Hashtag", "#\\w+");
 
 
 /***/ }),
@@ -19193,8 +19224,8 @@ exports.letters = recognizer_1.regexRecognizer("Letters", "[A-Za-z]+");
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var recognizer_1 = __webpack_require__(1);
-exports.logLevel = recognizer_1.regexRecognizer("Log level", "\\b(?:TRACE|DEBUG|INFO|WARN|ERROR)\\b", "(?:TRACE|DEBUG|INFO|WARN|ERROR)");
+var recognizer_1 = __webpack_require__(0);
+exports.hex = recognizer_1.regexRecognizer("Hex number", "\\b0x[0-9a-fA-F]+\\b", "0x[0-9a-fA-F]+");
 
 
 /***/ }),
@@ -19204,8 +19235,8 @@ exports.logLevel = recognizer_1.regexRecognizer("Log level", "\\b(?:TRACE|DEBUG|
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var recognizer_1 = __webpack_require__(1);
-exports.singleQuoted = recognizer_1.regexRecognizer("Single quoted", "'[^']*'");
+var recognizer_1 = __webpack_require__(0);
+exports.hexColor = recognizer_1.regexRecognizer("Hex color", "#[0-9a-fA-F]{6}\\b", "#[0-9a-fA-F]{6}");
 
 
 /***/ }),
@@ -19215,8 +19246,8 @@ exports.singleQuoted = recognizer_1.regexRecognizer("Single quoted", "'[^']*'");
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var recognizer_1 = __webpack_require__(1);
-exports.url = recognizer_1.regexRecognizer("URL", "https?://[^\\s]+");
+var recognizer_1 = __webpack_require__(0);
+exports.ipv4 = recognizer_1.regexRecognizer("IPv4 address", "(?:\\d{1,3}\\.){3}\\d{1,3}", "\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}");
 
 
 /***/ }),
@@ -19226,8 +19257,8 @@ exports.url = recognizer_1.regexRecognizer("URL", "https?://[^\\s]+");
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var recognizer_1 = __webpack_require__(1);
-exports.uuid = recognizer_1.regexRecognizer("UUID", "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}");
+var recognizer_1 = __webpack_require__(0);
+exports.isoTimestamp = recognizer_1.regexRecognizer("ISO timestamp", "\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?Z?");
 
 
 /***/ }),
@@ -19237,8 +19268,8 @@ exports.uuid = recognizer_1.regexRecognizer("UUID", "[0-9a-fA-F]{8}-[0-9a-fA-F]{
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var recognizer_1 = __webpack_require__(1);
-exports.whitespace = recognizer_1.regexRecognizer("Whitespace", "\\s+");
+var recognizer_1 = __webpack_require__(0);
+exports.letters = recognizer_1.regexRecognizer("Letters", "[A-Za-z]+");
 
 
 /***/ }),
@@ -19248,12 +19279,122 @@ exports.whitespace = recognizer_1.regexRecognizer("Whitespace", "\\s+");
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var recognizer_1 = __webpack_require__(1);
-exports.word = recognizer_1.regexRecognizer("Word", "\\w+");
+var recognizer_1 = __webpack_require__(0);
+exports.logLevel = recognizer_1.regexRecognizer("Log level", "\\b(?:TRACE|DEBUG|INFO|WARN|ERROR)\\b", "(?:TRACE|DEBUG|INFO|WARN|ERROR)");
 
 
 /***/ }),
 /* 71 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var recognizer_1 = __webpack_require__(0);
+exports.macAddress = recognizer_1.regexRecognizer("MAC address", "(?:[0-9a-fA-F]{2}:){5}[0-9a-fA-F]{2}");
+
+
+/***/ }),
+/* 72 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var recognizer_1 = __webpack_require__(0);
+exports.percentage = recognizer_1.regexRecognizer("Percentage", "\\d+(?:\\.\\d+)?%");
+
+
+/***/ }),
+/* 73 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var recognizer_1 = __webpack_require__(0);
+exports.phone = recognizer_1.regexRecognizer("Phone number", "\\+?\\d[\\d-]{6,}\\d");
+
+
+/***/ }),
+/* 74 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var recognizer_1 = __webpack_require__(0);
+exports.semver = recognizer_1.regexRecognizer("Version number", "\\d+\\.\\d+\\.\\d+");
+
+
+/***/ }),
+/* 75 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var recognizer_1 = __webpack_require__(0);
+exports.singleQuoted = recognizer_1.regexRecognizer("Single quoted", "'[^']*'");
+
+
+/***/ }),
+/* 76 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var recognizer_1 = __webpack_require__(0);
+exports.time = recognizer_1.regexRecognizer("Time", "\\d{2}:\\d{2}:\\d{2}");
+
+
+/***/ }),
+/* 77 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var recognizer_1 = __webpack_require__(0);
+exports.url = recognizer_1.regexRecognizer("URL", "https?://[^\\s]+");
+
+
+/***/ }),
+/* 78 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var recognizer_1 = __webpack_require__(0);
+exports.uuid = recognizer_1.regexRecognizer("UUID", "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}");
+
+
+/***/ }),
+/* 79 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var recognizer_1 = __webpack_require__(0);
+exports.whitespace = recognizer_1.regexRecognizer("Whitespace", "\\s+");
+
+
+/***/ }),
+/* 80 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var recognizer_1 = __webpack_require__(0);
+exports.word = recognizer_1.regexRecognizer("Word", "\\w+");
+
+
+/***/ }),
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19288,7 +19429,7 @@ exports.findMatches = findMatches;
 
 
 /***/ }),
-/* 72 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19317,14 +19458,14 @@ exports.applyOptions = applyOptions;
 
 
 /***/ }),
-/* 73 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var build_1 = __webpack_require__(74);
-var segmentize_1 = __webpack_require__(76);
+var build_1 = __webpack_require__(84);
+var segmentize_1 = __webpack_require__(86);
 function buildRegexFromMatches(text, matches) {
     return build_1.buildRegex(segmentize_1.matchesToSegments(text, matches));
 }
@@ -19332,13 +19473,13 @@ exports.buildRegexFromMatches = buildRegexFromMatches;
 
 
 /***/ }),
-/* 74 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var escapeLiteral_1 = __webpack_require__(75);
+var escapeLiteral_1 = __webpack_require__(85);
 function buildRegex(segments) {
     return segments
         .map(function (segment) { return (segment.kind === "literal" ? escapeLiteral_1.escapeLiteral(segment.text) : segment.pattern); })
@@ -19348,7 +19489,7 @@ exports.buildRegex = buildRegex;
 
 
 /***/ }),
-/* 75 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19362,14 +19503,14 @@ exports.escapeLiteral = escapeLiteral;
 
 
 /***/ }),
-/* 76 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var match_1 = __webpack_require__(4);
-var segment_1 = __webpack_require__(77);
+var segment_1 = __webpack_require__(87);
 function matchesToSegments(text, matches) {
     var sorted = match_1.sortMatches(matches);
     var segments = [];
@@ -19394,7 +19535,7 @@ exports.matchesToSegments = matchesToSegments;
 
 
 /***/ }),
-/* 77 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19411,14 +19552,14 @@ exports.pattern = pattern;
 
 
 /***/ }),
-/* 78 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var color_1 = __webpack_require__(79);
-var rows_1 = __webpack_require__(80);
+var color_1 = __webpack_require__(89);
+var rows_1 = __webpack_require__(90);
 function layoutSuggestions(matches) {
     var rows = rows_1.assignRows(matches);
     var boxes = [];
@@ -19444,7 +19585,7 @@ exports.rowCount = rowCount;
 
 
 /***/ }),
-/* 79 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19466,7 +19607,7 @@ exports.colorFor = colorFor;
 
 
 /***/ }),
-/* 80 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19498,7 +19639,7 @@ exports.assignRows = assignRows;
 
 
 /***/ }),
-/* 81 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19520,7 +19661,7 @@ exports.copyText = copyText;
 
 
 /***/ }),
-/* 82 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19530,7 +19671,7 @@ exports.defaultSample = "2020-03-12T13:34:56.123Z INFO  [org.example.Class]: Thi
 
 
 /***/ }),
-/* 83 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19548,7 +19689,7 @@ exports.toggleSelection = toggleSelection;
 
 
 /***/ }),
-/* 84 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19575,11 +19716,32 @@ exports.tourSteps = [
 
 
 /***/ }),
-/* 85 */
+/* 95 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var PREFIX = "#text=";
+function encodeSample(sample) {
+    return PREFIX + encodeURIComponent(sample);
+}
+exports.encodeSample = encodeSample;
+function decodeSample(hash) {
+    if (hash.indexOf(PREFIX) !== 0) {
+        return null;
+    }
+    return decodeURIComponent(hash.slice(PREFIX.length));
+}
+exports.decodeSample = decodeSample;
+
+
+/***/ }),
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(86);
+var content = __webpack_require__(97);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -19593,7 +19755,7 @@ var options = {"hmr":true}
 options.transform = transform
 options.insertInto = undefined;
 
-var update = __webpack_require__(88)(content, options);
+var update = __webpack_require__(99)(content, options);
 
 if(content.locals) module.exports = content.locals;
 
@@ -19625,10 +19787,10 @@ if(false) {
 }
 
 /***/ }),
-/* 86 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(87)(false);
+exports = module.exports = __webpack_require__(98)(false);
 // imports
 
 
@@ -19639,7 +19801,7 @@ exports.push([module.i, "* {\n  box-sizing: border-box;\n}\n\nbody {\n  margin: 
 
 
 /***/ }),
-/* 87 */
+/* 98 */
 /***/ (function(module, exports) {
 
 /*
@@ -19721,7 +19883,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 88 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -19787,7 +19949,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(89);
+var	fixUrls = __webpack_require__(100);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -20103,7 +20265,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 89 */
+/* 100 */
 /***/ (function(module, exports) {
 
 
