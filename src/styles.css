@@ -291,3 +291,27 @@ body {
   opacity: 0.5;
   cursor: default;
 }
+
+@media (max-width: 640px) {
+  .app-steps {
+    padding: 16px;
+  }
+
+  .step {
+    flex-direction: column;
+  }
+
+  .step-number {
+    width: auto;
+    font-size: 32px;
+  }
+
+  .options-block,
+  .snippets-block {
+    padding-left: 0;
+  }
+
+  .tour-card {
+    margin: 0 16px;
+  }
+}
