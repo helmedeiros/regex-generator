@@ -97,6 +97,14 @@ describe("App", () => {
     expect(shallow(<App />).find(Tour).length).toBe(1);
   });
 
+  it("labels the help button for assistive tech", () => {
+    expect(
+      shallow(<App />)
+        .find(".help-button")
+        .prop("aria-label")
+    ).toBe("Open the introduction");
+  });
+
   it("closes the tour", () => {
     const wrapper = shallow(<App />);
     wrapper.find(Tour).simulate("close");

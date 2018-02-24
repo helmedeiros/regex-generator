@@ -55,7 +55,12 @@ export class App extends React.Component<{}, AppState> {
       <div className="app">
         <header className="app-header">
           <h1 className="app-title">Regex Generator</h1>
-          <button type="button" className="help-button" onClick={this.handleOpenTour}>
+          <button
+            type="button"
+            className="help-button"
+            aria-label="Open the introduction"
+            onClick={this.handleOpenTour}
+          >
             ?
           </button>
         </header>
