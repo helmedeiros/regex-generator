@@ -80,6 +80,15 @@ body {
   font-size: 14px;
 }
 
+.reset-sample {
+  padding: 6px 12px;
+  background: none;
+  border: 1px solid #dadce0;
+  border-radius: 4px;
+  color: #3c4043;
+  cursor: pointer;
+}
+
 .suggestions {
   font-family: Consolas, Menlo, monospace;
   font-size: 15px;

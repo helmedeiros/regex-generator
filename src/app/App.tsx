@@ -65,6 +65,9 @@ export class App extends React.Component<{}, AppState> {
             <p className="sample-hint">
               Give us an example of the text you want to match using your regex.
             </p>
+            <button type="button" className="reset-sample" onClick={this.handleReset}>
+              Reset
+            </button>
           </Step>
           <Step index={2} title="Which parts of the text are interesting for you?">
             <Suggestions
@@ -107,6 +110,10 @@ export class App extends React.Component<{}, AppState> {
 
   private handleOptions = (options: RegexOptions) => {
     this.setState({ options });
+  };
+
+  private handleReset = () => {
+    this.setState({ sample: defaultSample, selected: [] });
   };
 
   private handleCopy = () => {

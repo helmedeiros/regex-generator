@@ -59,6 +59,13 @@ describe("App", () => {
     expect(shallow(<App />).find(".sample-hint").length).toBe(1);
   });
 
+  it("resets the sample to the default", () => {
+    const wrapper = shallow(<App />);
+    wrapper.find(SampleInput).simulate("change", "changed");
+    wrapper.find(".reset-sample").simulate("click");
+    expect(wrapper.find(SampleInput).prop("value")).toBe(defaultSample);
+  });
+
   it("shows a hint for the suggestions step", () => {
     expect(shallow(<App />).find(".suggestions-hint").length).toBe(1);
   });
