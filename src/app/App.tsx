@@ -84,6 +84,14 @@ export class App extends React.Component<{}, AppState> {
             <p className="suggestions-hint">
               Click on the marked suggestions to select them for your regular expression.
             </p>
+            <button
+              type="button"
+              className="clear-selection"
+              disabled={this.state.selected.length === 0}
+              onClick={this.handleClearSelection}
+            >
+              Clear selection
+            </button>
           </Step>
           <div className="options-block">
             <OptionsPanel options={this.state.options} onChange={this.handleOptions} />
@@ -119,6 +127,10 @@ export class App extends React.Component<{}, AppState> {
 
   private handleReset = () => {
     this.setState({ sample: defaultSample, selected: [] });
+  };
+
+  private handleClearSelection = () => {
+    this.setState({ selected: [] });
   };
 
   private handleCopy = () => {

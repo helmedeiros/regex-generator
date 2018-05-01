@@ -80,13 +80,19 @@ body {
   font-size: 14px;
 }
 
-.reset-sample {
+.reset-sample,
+.clear-selection {
   padding: 6px 12px;
   background: none;
   border: 1px solid #dadce0;
   border-radius: 4px;
   color: #3c4043;
   cursor: pointer;
+}
+
+.clear-selection:disabled {
+  opacity: 0.5;
+  cursor: default;
 }
 
 .suggestions {

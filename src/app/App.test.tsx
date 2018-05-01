@@ -111,6 +111,14 @@ describe("App", () => {
     expect(wrapper.find(Tour).length).toBe(0);
   });
 
+  it("clears the selection", () => {
+    const wrapper = shallow(<App />);
+    const box = (wrapper.find(Suggestions).prop("boxes") as SuggestionBox[])[0];
+    wrapper.find(Suggestions).simulate("select", box);
+    wrapper.find(".clear-selection").simulate("click");
+    expect(wrapper.find(Suggestions).prop("selected")).toEqual([]);
+  });
+
   it("previews matches of the generated regex on the sample", () => {
     const ranges = shallow(<App />)
       .find(RegexPreview)
