@@ -1,7 +1,7 @@
-const PALETTE = ["#db4437", "#0f9d58", "#4285f4", "#f4b400"];
+import { palette } from "./palette";
 
 export function paletteSize(): number {
-  return PALETTE.length;
+  return palette.length;
 }
 
 export function colorFor(name: string): string {
@@ -9,5 +9,5 @@ export function colorFor(name: string): string {
   for (let i = 0; i < name.length; i += 1) {
     hash = (hash * 31 + name.charCodeAt(i)) % 1000000007;
   }
-  return PALETTE[hash % PALETTE.length];
+  return palette[hash % palette.length];
 }
