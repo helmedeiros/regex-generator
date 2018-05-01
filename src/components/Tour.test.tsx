@@ -26,6 +26,13 @@ describe("Tour", () => {
     expect(onClose).toBeCalled();
   });
 
+  it("closes when escape is pressed", () => {
+    const onClose = jest.fn();
+    mount(<Tour steps={tourSteps} onClose={onClose} />);
+    window.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }));
+    expect(onClose).toBeCalled();
+  });
+
   it("finishes from the last step", () => {
     const onClose = jest.fn();
     const wrapper = mount(<Tour steps={tourSteps} onClose={onClose} />);

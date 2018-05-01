@@ -13,6 +13,14 @@ export interface TourState {
 export class Tour extends React.Component<TourProps, TourState> {
   public state: TourState = { index: 0 };
 
+  public componentDidMount() {
+    window.addEventListener("keydown", this.handleKey);
+  }
+
+  public componentWillUnmount() {
+    window.removeEventListener("keydown", this.handleKey);
+  }
+
   public render() {
     const { steps } = this.props;
     const step = steps[this.state.index];
@@ -56,5 +64,11 @@ export class Tour extends React.Component<TourProps, TourState> {
 
   private next = () => {
     this.setState({ index: Math.min(this.props.steps.length - 1, this.state.index + 1) });
+  };
+
+  private handleKey = (event: KeyboardEvent) => {
+    if (event.key === "Escape") {
+      this.props.onClose();
+    }
   };
 }
