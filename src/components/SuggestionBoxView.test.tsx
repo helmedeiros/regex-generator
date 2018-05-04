@@ -35,4 +35,20 @@ describe("SuggestionBoxView", () => {
       .simulate("click");
     expect(onSelect).toBeCalledWith(box);
   });
+
+  it("labels the box for assistive tech", () => {
+    expect(
+      shallow(<SuggestionBoxView box={box} selected={false} onSelect={jest.fn()} />)
+        .find(".suggestion-box")
+        .prop("aria-label")
+    ).toBe("Word");
+  });
+
+  it("selects on the enter key", () => {
+    const onSelect = jest.fn();
+    shallow(<SuggestionBoxView box={box} selected={false} onSelect={onSelect} />)
+      .find(".suggestion-box")
+      .simulate("keypress", { key: "Enter" });
+    expect(onSelect).toBeCalledWith(box);
+  });
 });

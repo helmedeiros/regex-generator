@@ -16,12 +16,21 @@ export function SuggestionBoxView(props: SuggestionBoxViewProps) {
     backgroundColor: box.color
   };
   const className = props.selected ? "suggestion-box suggestion-box-selected" : "suggestion-box";
+  const select = () => props.onSelect(box);
   return (
     <div
       className={className}
       style={style}
       title={box.match.name}
-      onClick={() => props.onSelect(box)}
+      role="button"
+      tabIndex={0}
+      aria-label={box.match.name}
+      onClick={select}
+      onKeyPress={event => {
+        if (event.key === "Enter") {
+          select();
+        }
+      }}
     />
   );
 }
