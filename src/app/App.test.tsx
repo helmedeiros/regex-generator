@@ -126,6 +126,17 @@ describe("App", () => {
     expect(ranges.length).toBeGreaterThan(0);
   });
 
+  it("shows the active flags", () => {
+    const wrapper = shallow(<App />);
+    expect(wrapper.find(".regex-flags").length).toBe(0);
+    wrapper.find(OptionsPanel).simulate("change", {
+      caseInsensitive: true,
+      wholeLine: false,
+      global: true
+    });
+    expect(wrapper.find(".regex-flags").text()).toContain("gi");
+  });
+
   it("anchors the regex when whole line is enabled", () => {
     const wrapper = shallow(<App />);
     wrapper.find(OptionsPanel).simulate("change", {

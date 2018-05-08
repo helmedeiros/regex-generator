@@ -189,6 +189,13 @@ body {
   cursor: pointer;
 }
 
+.regex-flags {
+  margin: 8px 0 0;
+  color: #5f6368;
+  font-size: 14px;
+  font-family: Consolas, Menlo, monospace;
+}
+
 .regex-preview {
   margin: 12px 0 0;
   font-family: Consolas, Menlo, monospace;

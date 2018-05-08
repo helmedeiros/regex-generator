@@ -50,7 +50,8 @@ export class App extends React.Component<{}, AppState> {
     const boxes = layoutSuggestions(recognize(this.state.sample));
     const regex = this.currentRegex();
     const core = buildRegexFromMatches(this.state.sample, this.state.selected);
-    const ranges = findMatches(this.state.sample, core, flagsFor(this.state.options));
+    const flags = flagsFor(this.state.options);
+    const ranges = findMatches(this.state.sample, core, flags);
     return (
       <div className="app">
         <header className="app-header">
@@ -98,6 +99,7 @@ export class App extends React.Component<{}, AppState> {
           </div>
           <Step index={3} title="Regular Expression">
             <RegexOutput regex={regex} onCopy={this.handleCopy} />
+            {flags.length > 0 ? <p className="regex-flags">Flags: {flags}</p> : null}
             <RegexPreview text={this.state.sample} ranges={ranges} />
           </Step>
           <div className="snippets-block">
